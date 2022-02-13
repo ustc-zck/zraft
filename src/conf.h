@@ -4,7 +4,7 @@
 
 class RaftConf{
     public:
-        RaftConf(std::string confPath = "../conf/raft.conf/");
+        RaftConf(std::string confPath = "../conf/raft.conf");
         std::string addr;
         std::vector<std::string> peers;
         uint64_t electionTimeOut;
