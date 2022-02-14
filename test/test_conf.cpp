@@ -1,5 +1,8 @@
 #include "../src/conf.h"
 
+
+//complie command line: g++ -o test_conf test_conf.cpp ../src/conf.h ../src/conf.cpp 
+
 int main(){
     RaftConf* conf = new RaftConf();
     std::cout << "addr is: " << conf->addr << std::endl;
@@ -11,7 +14,7 @@ int main(){
 
     std::cout << "election time out is: " << conf->electionTimeOut << std::endl;
     std::cout << "broadcast time out is: " << conf->broadcastTimeOut << std::endl;
-    std::cout << "term period is: " << conf->termPeriod << std::endl;
+    std::cout << "term time out is: " << conf->termTimeOut<< std::endl;
     
     return 0;
 }

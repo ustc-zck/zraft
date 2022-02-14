@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,6 +11,6 @@ class RaftConf{
         std::vector<std::string> peers;
         uint64_t electionTimeOut;
         uint64_t broadcastTimeOut;
-        uint64_t termPeriod;
+        uint64_t termTimeOut;
 };
 

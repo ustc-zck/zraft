@@ -72,6 +72,10 @@
         "fstream": "cpp",
         "cinttypes": "cpp",
         "typeindex": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "codecvt": "cpp",
+        "condition_variable": "cpp",
+        "iomanip": "cpp",
+        "thread": "cpp"
     }
 }

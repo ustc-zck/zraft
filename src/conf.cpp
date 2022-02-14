@@ -21,7 +21,6 @@ RaftConf::RaftConf(std::string confPath){
         boost::trim_right(val);
         boost::trim_left(val);
 
-        
         if(key == "addr"){
             addr = val;
         } else if(key == "peers"){
@@ -38,14 +37,13 @@ RaftConf::RaftConf(std::string confPath){
                 }
                 peers.push_back(val.substr(startPos));
             }
-
         } else if(key == "election_time_out"){
             electionTimeOut =  std::stol(val);
         } else if(key == "broadcast_time_out"){
             broadcastTimeOut = std::stol(val);
 
-        } else if(key == "term_period"){
-            termPeriod = std::stol(val);
+        } else if(key == "term_time_out"){
+            termTimeOut = std::stol(val);
         } else{
             //TODO...
         }
