@@ -17,3 +17,14 @@ std::vector<std::string> SplitStr(std::string str, char delimiter){
     }
     return result;
 }
+
+uint64_t GetCurrentMillSeconds(){
+    uint64_t now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    return now;
+}
+
+float GenerateRandomNumber(){
+    srand( (unsigned)time( NULL ) ); 
+ 
+    return  (float) rand()/RAND_MAX;
+}

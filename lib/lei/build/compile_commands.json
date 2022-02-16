@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/home/parallels/lei/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9   -I\"/home/parallels/lei/src/*.h\"  -g   -o CMakeFiles/lei.dir/src/server.cpp.o -c /home/parallels/lei/src/server.cpp",
+  "file": "/home/parallels/lei/src/server.cpp"
+},
+{
+  "directory": "/home/parallels/lei/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9   -I\"/home/parallels/lei/src/*.h\"  -g   -o CMakeFiles/lei.dir/src/socket.cpp.o -c /home/parallels/lei/src/socket.cpp",
+  "file": "/home/parallels/lei/src/socket.cpp"
+},
+{
+  "directory": "/home/parallels/lei/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9   -I\"/home/parallels/lei/src/*.h\"  -g   -o CMakeFiles/lei.dir/src/thread.cpp.o -c /home/parallels/lei/src/thread.cpp",
+  "file": "/home/parallels/lei/src/thread.cpp"
+},
+{
+  "directory": "/home/parallels/lei/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9   -I\"/home/parallels/lei/src/*.h\"  -g   -o CMakeFiles/lei.dir/examples/echo.cpp.o -c /home/parallels/lei/examples/echo.cpp",
+  "file": "/home/parallels/lei/examples/echo.cpp"
+}
+]

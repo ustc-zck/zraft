@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/parallels/lei/examples/echo.cpp
+iostream
+-
+../src/server.h
+/home/parallels/lei/src/server.h
+
+/home/parallels/lei/src/server.h
+socket.h
+/home/parallels/lei/src/socket.h
+string
+-
+vector
+-
+sys/epoll.h
+-
+unistd.h
+-
+sys/timerfd.h
+-
+thread.h
+/home/parallels/lei/src/thread.h
+
+/home/parallels/lei/src/socket.h
+sys/socket.h
+-
+string
+-
+
+/home/parallels/lei/src/thread.h
+thread
+-
+string
+-
+vector
+-
+algorithm
+-
+

@@ -44,8 +44,9 @@ RaftConf::RaftConf(std::string confPath){
 
         } else if(key == "term_time_out"){
             termTimeOut = std::stol(val);
-        } else{
+        } else if(key == "port"){
             //TODO...
+            port = std::stoi(val);
         }
     }
     conf.close();

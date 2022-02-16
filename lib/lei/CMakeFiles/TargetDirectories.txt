@@ -1,0 +1,3 @@
+/home/parallels/lei/CMakeFiles/rebuild_cache.dir
+/home/parallels/lei/CMakeFiles/edit_cache.dir
+/home/parallels/lei/CMakeFiles/lei.dir

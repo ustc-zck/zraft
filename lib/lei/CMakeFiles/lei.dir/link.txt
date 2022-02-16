@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblei.a  CMakeFiles/lei.dir/src/server.cpp.o CMakeFiles/lei.dir/src/socket.cpp.o CMakeFiles/lei.dir/src/thread.cpp.o CMakeFiles/lei.dir/examples/echo.cpp.o
+/usr/bin/ranlib liblei.a

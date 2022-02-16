@@ -3,13 +3,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <tuple>
 #include <unordered_map>
+#include <thread>
+#include <unistd.h>
+#include <boost/algorithm/string.hpp>
+#include <functional>
 #include "conf.h"
 #include "log.h"
 #include "rocksdb/db.h"
 #include "rocksdb/slice.h"
 #include "rocksdb/options.h"
 #include "utils.h"
+#include "../lib/lei/src/server.h"
+
 
 class RaftNode{
     public:
@@ -18,19 +25,29 @@ class RaftNode{
         //replicate log entries to followers, also used as heartbeart...
         //term: leader term, leaderId: leader id, prevLogIndex: the lastest index of log entry for follower, which is value of nextIndex, prevLogTerm: the term of prevLogEntry, entries: log_entries to followersm empty for heartbeat, leaderCommit: leader's commitIndex
         //prevLogIndex and prevLogTerm are used to match follower's log index and log term...
-        std::pair<int, bool> AppendEntries(uint64_t term, int leaderId, uint64_t prevLogIndex, uint64_t prevLogTerm, std::vector<std::string> entries, uint64_t leaderCommit);
+        std::pair<uint64_t, bool> AppendEntries(uint64_t leaderTerm, std::string leaderId_, uint64_t prevLogIndex, uint64_t prevLogTerm, std::vector<std::tuple<uint64_t, uint64_t, std::string>> entries, uint64_t leaderCommit);
         
-        std::pair<int, bool> RequestVote(uint64_t term, int candidateId, uint64_t lastLogIndex, uint64_t lastLogTerm);
+        std::pair<uint64_t, bool> RequestVote(uint64_t candidateTerm, std::string candidateId, uint64_t lastLogIndex, uint64_t lastLogTerm);
 
         //user call...
         std::string Get(std::string key);
         bool Put(std::string key, std::string value);
         bool Del(std::string key);
         bool UpdateConf(std::unordered_map<std::string, std::string> conf);
-        //applied data...
-        void Apply();
+
         //run...
+        void LeaderRun();
+        void FollowerRun();
+        void CandidateRun();
+        void NodeRun();
         void Run();
+
+        std::string ServerHandler(char* buf);
+        void Handle();
+        std::pair<uint64_t, bool> LeaderSendLogEntries(std::string peer, int entriesSize = 100);
+        std::pair<uint64_t, bool> CandidataRequestVote(std::string peer);
+
+
     private:
         //db operation of rocksdb, not used for client...
         std::string GetRocks(std::string key);
@@ -42,10 +59,21 @@ class RaftNode{
 
         //after elected as ledaer, rinitialize....
         void ReinitilAfterElection();
-
+        //applied data...
+        void Apply();
+        uint64_t LastLogIndex(){
+            if(logIndex.size() == 0){
+                    return 0;
+            }else{
+                return logIndex.back() + 1;
+            }
+        }
+        void UpdateCommitIndex();
     private:
         //node id, noted as addr...
-        std::string NodeId;
+        std::string nodeId;
+        //leader id...
+        std::string leaderId;
 
         //raft node role, between leader, follower and candidate...
         static const int LEADER = 0;
@@ -53,14 +81,15 @@ class RaftNode{
         static const int CANDIDATE = 2;
         int role;
 
-
         //peer addrs...
         std::vector<std::string> peers;
+        //std::unordered_map<std::string, uint64_t> fds;
 
         //persistent state on all servers...
         //latest term that server has seen...
         uint64_t currentTerm;
         //candidata id that this node vote for...
+        int votes;
         std::string voteFor;
 
         //log entries, consists of log index + term + command...
@@ -83,9 +112,11 @@ class RaftNode{
         std::unordered_map<std::string, uint64_t> matchIndex;
 
         //broadcastTime ≪ electionTimeout ≪ MTBF     
-
         //last receive log entries time....
         uint64_t lastReceiveLogEntriesTime;
+
+        //start election time...
+        uint64_t startElectionTime;
         //broadcast time out, may range from 0.5ms to 2ms...
         uint64_t broadcastTimeOut;
 
@@ -105,5 +136,10 @@ class RaftNode{
         rocksdb::DB* db;
 
         //logger...
-        RaftLog* log;                                                                                                                                                                                                                                                                                                          
+        RaftLog* log;             
+
+        //server...
+        Server* server;
+        //thread pool...
+        std::vector<std::thread> threads;                                                                                                                                                                                                                                                                                             
 };

@@ -12,5 +12,6 @@ class RaftConf{
         uint64_t electionTimeOut;
         uint64_t broadcastTimeOut;
         uint64_t termTimeOut;
+        int port;
 };
 
