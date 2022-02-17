@@ -241,8 +241,11 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
 
     if(leaderTerm < currentTerm){
         return std::make_pair(currentTerm, false);
-    } else{
+    } else if (leaderTerm > currentTerm) {
         currentTerm = leaderTerm;
+        voteFor = "NONE";
+    } else{
+
     }
     //default unordered map contains 0 or not???
     if(logTerm.find(prevLogIndex) == logTerm.end()){
@@ -539,7 +542,7 @@ void RaftNode::CandidateRun(){
             //not get voted...
         }
     }
-    if(votes > (1 + peers.size()) / 2.0){
+    if(role == CANDIDATE && votes > (1 + peers.size()) / 2.0){
         role = LEADER;
         this->ReinitilAfterElection();
         return;
