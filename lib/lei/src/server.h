@@ -1,7 +1,7 @@
 #include "socket.h"
 #include <string>
 #include <vector>
-
+#include <functional>
 #include <sys/epoll.h>
 #include <unistd.h>
 #include <sys/timerfd.h>

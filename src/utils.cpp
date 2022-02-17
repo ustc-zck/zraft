@@ -24,7 +24,7 @@ uint64_t GetCurrentMillSeconds(){
 }
 
 float GenerateRandomNumber(){
-    srand( (unsigned)time( NULL ) ); 
+    srand((unsigned)time(NULL) ); 
  
-    return  (float) rand()/RAND_MAX;
+    return (float) rand()/RAND_MAX;
 }

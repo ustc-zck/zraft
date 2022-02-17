@@ -15,6 +15,7 @@ int main(){
     std::cout << "election time out is: " << conf->electionTimeOut << std::endl;
     std::cout << "broadcast time out is: " << conf->broadcastTimeOut << std::endl;
     std::cout << "term time out is: " << conf->termTimeOut<< std::endl;
+    std::cout << "port is " << conf->port << std::endl;
     
     return 0;
 }

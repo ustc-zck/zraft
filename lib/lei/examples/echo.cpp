@@ -1,7 +1,8 @@
 #include <iostream>
+#include <string>
 #include "../src/server.h"
 
-char* Echo(char* buf){
+std::string Echo(char* buf){
     std::cout << "server recevd msg:" << buf << std::endl;
     return buf;
 }

@@ -40,6 +40,8 @@ RaftNode::RaftNode(std::string confPath){
     lastReceiveLogEntriesTime = GetCurrentMillSeconds();
 
     server = new Server(raftConf->port);
+
+    logTerm[0] = 0;
 }
 
 void RaftNode::ReinitilAfterElection(){
@@ -84,28 +86,30 @@ bool RaftNode::DelRocks(std::string key){
 void RaftNode::UpdateConfDO(std::unordered_map<std::string, std::string> conf){
     for(auto iter = conf.begin(); iter != conf.end(); iter++){
         std::string key = iter->first;
-        if(key == "AddNode"){
+        boost::algorithm::to_upper(key);
+        if(key == "ADDNODE"){
             peers.push_back(iter->second);
-        } else if(key == "DelNode"){
+        } else if(key == "DELNODE"){
             for(int i = 0; i < peers.size(); i++){
                 if(peers[i] == iter->second){
                     peers.erase(peers.begin() + i);
                 }
             }
-        } else if(key == "BroadcastTimeOut") { 
+        } else if(key == "BROADCASTTIMEOUT") { 
             broadcastTimeOut = std::stol(iter->second);
-        } else if(key == "ElectionTimeOut"){
+        } else if(key == "ELECTIONTIMEOUT"){
             electionTimeOut = std::stol(iter->second);
-        } else if(key == "TermTimeOut"){
+        } else if(key == "TERMTIMEOUT"){
             termTimeOut = std::stol(iter->second);
         } else {
-            //TODO...
+            //TODO, update more conf items...
         }
     }
 }
 
 //user call...
 std::string RaftNode::Get(std::string key){
+    //not strong consistency...
     return this->GetRocks(key);
 }
 
@@ -162,6 +166,7 @@ bool RaftNode::UpdateConf(std::unordered_map<std::string, std::string> conf){
         command += item.first;
         command += "\t";
         command += item.second;
+        command += "\t";
     }
     logCommand[index] = command;
     return true;
@@ -192,7 +197,7 @@ void RaftNode::FlushLog(){
 void RaftNode::Apply(){
     while(true){
         if(commitIndex > lastApplied){
-            auto index = logIndex[lastApplied];
+            auto index = logIndex[lastApplied + 1];
             auto command = logCommand[index];
             //parse command...
             auto items = SplitStr(command, '\t');
@@ -223,8 +228,9 @@ void RaftNode::Apply(){
 //leader --> follower, now only support replicate one entry one time...
 std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::string leaderId_, uint64_t prevLogIndex, uint64_t prevLogTerm, std::vector<std::tuple<uint64_t, uint64_t, std::string>> entries, uint64_t leaderCommit){
     
-    if(role == CANDIDATE || role == LEADER){
+    if(role == CANDIDATE){
         role = FOLLOWER;
+        leaderId = leaderId_;
     }
 
     lastReceiveLogEntriesTime = GetCurrentMillSeconds();
@@ -238,11 +244,7 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
     } else{
         currentTerm = leaderTerm;
     }
-    //note the initial situation...
-    // if(prevLogIndex == 0){
-    //     return std::make_pair(currentTerm, true);
-    // }
-
+    //default unordered map contains 0 or not???
     if(logTerm.find(prevLogIndex) == logTerm.end()){
         return std::make_pair(currentTerm, false);
     }
@@ -282,6 +284,7 @@ std::pair<uint64_t, bool> RaftNode::RequestVote(uint64_t candidateTerm, std::str
         return std::make_pair(currentTerm, false);
     }
     if((voteFor == "NONE" || voteFor == candidateId) && (candidateLastLogIndex >= this->LastLogIndex() && candidateLastLogTerm >= logTerm[this->LastLogIndex()])){
+        voteFor = candidateId;
         return std::make_pair(currentTerm, true);
     }
     return std::make_pair(currentTerm, false);
@@ -384,7 +387,6 @@ std::string RaftNode::ServerHandler(char* buf){
     }
 }
 
-
 std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int entriesSize){
     if(role != LEADER){
         return;
@@ -485,8 +487,9 @@ void RaftNode::LeaderRun(){
             //call append entries rpc in paralles...
             auto ret = this->LeaderSendLogEntries(peer);
             if(ret.first > currentTerm){
-                role = FOLLOWER;
                 currentTerm = ret.first;
+                voteFor = "NONE";
+                role = FOLLOWER;
             } else if(ret.second == false){
                 nextIndex[peer]--;
                 if(nextIndex[peer] < 0){
@@ -515,21 +518,22 @@ void RaftNode::FollowerRun(){
 }
 
 void RaftNode::CandidateRun(){
+    currentTerm++;
+    voteFor = nodeId;
+    votes = 1;
     startElectionTime = GetCurrentMillSeconds();
     auto randomSleepTime = uint64_t(GenerateRandomNumber() * electionTimeOut);
     usleep(randomSleepTime);
-    votes = 1;
-    voteFor = nodeId;
-    currentTerm++;
-    if(role != CANDIDATE){
-        return;
-    }
     //call request vote rpc, update votes...
     for(auto peer : peers){
         auto ret = CandidataRequestVote(peer);
         if(ret.first > currentTerm){
             currentTerm = ret.first;
-        } else if(ret.second == false){
+            //each vote in each term...
+            voteFor = "NONE";
+            role = FOLLOWER;
+            return;
+        } else if(ret.second == true){
             votes++;
         } else{
             //not get voted...
@@ -538,11 +542,14 @@ void RaftNode::CandidateRun(){
     if(votes > (1 + peers.size()) / 2.0){
         role = LEADER;
         ReinitilAfterElection();
+        return;
     }
     if(role == CANDIDATE){
         auto requestVoteCost = GetCurrentMillSeconds() - startElectionTime;
         usleep(electionTimeOut - randomSleepTime - requestVoteCost);
+        return;
     }
+    return;
 }
 
 void RaftNode::NodeRun(){
@@ -566,7 +573,10 @@ void RaftNode::Run(){
     std::thread handle(&RaftNode::Handle, this);
     std::thread apply(&RaftNode::Apply, this);
     std::thread run(&RaftNode::NodeRun, this);
+    std::thread flushlog(&RaftNode::FlushLog, this);
+
     handle.join();
     apply.join();
     run.join();
+    flushlog.join();
 }

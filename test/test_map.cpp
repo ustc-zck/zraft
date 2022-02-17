@@ -6,7 +6,10 @@
 
 int main ()
 {
-  std::unordered_map<uint64_t, uint64_t> map;
-  std::cout << map[0] << std::endl;
+  std::unordered_map<std::string, uint64_t> map;
+  map["a"] = 0;
+  std::cout << (map.find("a") == map.end())<< std::endl;
+  map.erase("a");
+  std::cout << (map.find("a") == map.end())<< std::endl;
   return 0;
 }
