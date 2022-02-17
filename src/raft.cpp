@@ -389,11 +389,11 @@ std::string RaftNode::ServerHandler(char* buf){
 
 std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int entriesSize){
     if(role != LEADER){
-        return;
+        return std::make_pair(-1, false);
     }
     auto s= new Socket();
     if(s->Connect(peer) < 0){
-        return;
+        return std::make_pair(-1, false);
     }
     std::string requestMsg = "*";
     requestMsg += "\t";

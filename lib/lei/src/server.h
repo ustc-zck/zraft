@@ -48,6 +48,7 @@ class Server{
     private:
         //event fd...
         int efd;
+        int Port;
         struct epoll_event* event;
         struct epoll_event *events;
         Socket* listen_socket;

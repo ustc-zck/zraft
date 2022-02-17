@@ -44,7 +44,7 @@ Server::Server(int port){
         Thread* s = new Thread();
         threads.push_back(s);
     }
-   
+    Port = port;
 }
 
 int Server::AddTimeEvent(int milliseconds){
@@ -68,7 +68,7 @@ int Server::AddTimeEvent(int milliseconds){
 }
 
 int Server::Run(){
-    std::cout << "Blocking and wait for epoll event..." << std::endl;
+    std::cout << "Blocking and wait for epoll event on port: " << Port << std::endl;
     int n;
     while(1){
         int thread_index = 0;

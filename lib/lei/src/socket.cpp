@@ -142,7 +142,7 @@ int Socket::Connect(std::string addr, bool keep_alive){
         }
     }
     if(connect(socket_fd, (struct sockaddr *) address, sizeof(*address)) < 0){
-        std::cout << "Failed to connect" << std::endl;
+        //std::cout << "Failed to connect" << std::endl;
         return -1;
     }
     return 0;
