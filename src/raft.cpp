@@ -40,7 +40,7 @@ RaftNode::RaftNode(std::string confPath){
     lastReceiveLogEntriesTime = GetCurrentMillSeconds();
 
     server = new Server(raftConf->port);
-
+    //note this...
     logTerm[0] = 0;
 }
 
@@ -492,7 +492,7 @@ void RaftNode::LeaderRun(){
                 role = FOLLOWER;
             } else if(ret.second == false){
                 nextIndex[peer]--;
-                if(nextIndex[peer] <= 0){
+                if(nextIndex[peer] < 1){
                     nextIndex[peer] = 1;
                 }
             } else{
