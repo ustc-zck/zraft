@@ -492,8 +492,8 @@ void RaftNode::LeaderRun(){
                 role = FOLLOWER;
             } else if(ret.second == false){
                 nextIndex[peer]--;
-                if(nextIndex[peer] < 0){
-                    nextIndex[peer] = 0;
+                if(nextIndex[peer] <= 0){
+                    nextIndex[peer] = 1;
                 }
             } else{
                 if(nextIndex[peer] + 100 > this->LastLogIndex() + 1){
@@ -541,7 +541,7 @@ void RaftNode::CandidateRun(){
     }
     if(votes > (1 + peers.size()) / 2.0){
         role = LEADER;
-        ReinitilAfterElection();
+        this->ReinitilAfterElection();
         return;
     }
     if(role == CANDIDATE){
