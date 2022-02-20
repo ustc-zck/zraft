@@ -131,7 +131,9 @@ bool RaftNode::Put(std::string key, std::string value){
     command += value;
     command += "\t";
     logCommand[index] = command;
-  
+    std::cout << "log index is " << index << std::endl;
+    std::cout << "last term is " << logTerm[index] << std::endl;
+    std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
 
@@ -149,6 +151,9 @@ bool RaftNode::Del(std::string key){
     command += key;
     command += "\t";
     logCommand[index] = command;
+    std::cout << "log index is " << index << std::endl;
+    std::cout << "current term is " << logTerm[index] << std::endl;
+    std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
 

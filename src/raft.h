@@ -70,7 +70,7 @@ class RaftNode{
             if(logIndex.size() == 0){
                     return 0;
             }else{
-                return logIndex.back() + 1;
+                return logIndex.back();
             }
         }
         void UpdateCommitIndex();

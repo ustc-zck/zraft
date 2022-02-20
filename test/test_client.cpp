@@ -13,6 +13,5 @@ int main(){
     if(cli->Del("hello1")){
         std::cout << "sucessfully del kv from raft" << std::endl;
     }
-    
     return 0;
 }

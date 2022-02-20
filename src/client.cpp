@@ -25,7 +25,7 @@ std::string RaftClient::Get(std::string key){
     }
     if(s->Recev() > 0){
         auto resp = std::string(s->ReadBuf());
-        std::cout << "client receive msg: " << resp << std::endl;
+        //std::cout << "client receive msg: " << resp << std::endl;
         std::vector<std::string> items = SplitStr(resp, '\t');
         if(items.size() == 1){
             return items[0];
