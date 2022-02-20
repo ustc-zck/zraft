@@ -15,7 +15,7 @@ RaftNode::RaftNode(std::string confPath){
     options.IncreaseParallelism();  // Optimize RocksDB...
     options.OptimizeLevelStyleCompaction();
     options.create_if_missing = true;  // create the DB if it's not already present...
-    s = rocksdb::DB::Open(options, "rocksdb/", &db);
+    s = rocksdb::DB::Open(options, "rocksdb1/", &db);
     if(!s.ok()){
         abort();
     }
@@ -398,6 +398,7 @@ std::string RaftNode::ServerHandler(char* buf){
                     resp += "FALSE";
                     resp += "\t";
                 }
+                std::cout << "request vote resp is " << resp << std::endl; 
                 return resp;
             }
         }else{
@@ -448,15 +449,12 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
         std::vector<std::string> items = SplitStr(resp, '\t');
         if(items.size() == 2){
             if(items[2] == "TRUE"){
-                delete s;
                 return std::make_pair(std::stoull(items[1]), true);
             } else{
-                delete s;
                 return std::make_pair(std::stoull(items[1]), false);
             }
         }
     }
-    delete s;
     return std::make_pair(-1, false);
 }
 
@@ -491,15 +489,12 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
         std::vector<std::string> items = SplitStr(resp, '\t');
         if(items.size() == 2){
             if(items[2] == "TRUE"){
-                delete s;
-                return std::make_pair(std::stoull(items[1]), true);
+                return std::make_pair(std::stoull(items[0]), true);
             } else{
-                delete s;
-                return std::make_pair(std::stoull(items[1]), false);
+                return std::make_pair(std::stoull(items[0]), false);
             }
         }
     }
-    delete s;
     return std::make_pair(0, false);
 }
 
@@ -542,6 +537,9 @@ void RaftNode::FollowerRun(){
 }
 
 void RaftNode::CandidateRun(){
+    if(role != CANDIDATE){
+        return;
+    }
     currentTerm++;
     voteFor = nodeId;
     votes = 1;
@@ -551,7 +549,7 @@ void RaftNode::CandidateRun(){
     usleep(randomSleepTime);
     //call request vote rpc, update votes...
     for(auto peer : peers){
-        //std::cout << "request vote from peer " << peer << std::endl;
+        std::cout << "request vote from peer " << peer << std::endl;
         auto ret = CandidataRequestVote(peer);
         //std::cout << "result of requst vote is " << ret.first << "\t" << ret.second << std::endl;
         if(ret.first > currentTerm){
@@ -573,13 +571,13 @@ void RaftNode::CandidateRun(){
         this->ReinitilAfterElection();
         return;
     }
-    if(role == CANDIDATE){
-        uint64_t requestVoteCost = GetCurrentMillSeconds() - startElectionTime;
-        if(randomSleepTime + requestVoteCost < electionTimeOut){
-            //std::cout << "sleep time for " << electionTimeOut - randomSleepTime - requestVoteCost << std::endl;
-            usleep(electionTimeOut - randomSleepTime - requestVoteCost);
-        } 
-    }
+    // if(role == CANDIDATE){
+    //     uint64_t requestVoteCost = GetCurrentMillSeconds() - startElectionTime;
+    //     if(randomSleepTime + requestVoteCost < electionTimeOut){
+    //         //std::cout << "sleep time for " << electionTimeOut - randomSleepTime - requestVoteCost << std::endl;
+    //         usleep(electionTimeOut - randomSleepTime - requestVoteCost);
+    //     } 
+    // }
     //for debug...
     return;
 }
@@ -590,8 +588,6 @@ void RaftNode::NodeRun(){
             LeaderRun();
         } else if(role == FOLLOWER){
             FollowerRun();
-        } else if(role == CANDIDATE){
-            CandidateRun();
         } else{
             continue;
         }
@@ -600,7 +596,8 @@ void RaftNode::NodeRun(){
 
 void RaftNode::Handle(){
     server->Handler = std::bind(&RaftNode::ServerHandler, this, _1);
-    //server->Handler = std::bind(&RaftNode::TestHanlder, this, _1);
+    server->TimeHandler = std::bind(&RaftNode::CandidateRun, this);
+    server->AddTimeEvent(raftConf->electionTimeOut);
     server->Run();
 }
 

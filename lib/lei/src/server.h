@@ -20,7 +20,8 @@ class Server{
         std::function<std::string(char* buf)> Handler;
 
         //IO Timer func...
-        int (*TimeHandler)();
+        // int (*TimeHandler)();
+        std::function<void(void)> TimeHandler;
         //Add time event...
         int AddTimeEvent(int millisceonds);
         //wrapper...

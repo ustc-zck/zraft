@@ -2,9 +2,10 @@
 #include <string> 
 #include "../src/server.h"
 
-int Test(){
+void Test(){
     std::cout << "test timder fd" << std::endl;
-    return 0;
+    sleep(10);
+    //return 0;
 }
 
 int main(){
