@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/timerfd.h>
 #include "thread.h"
+#include <iostream>
 
 //to be optimized...
 const int MAXEVENTS = 4096;
@@ -35,6 +36,7 @@ class Server{
                 }   
                 char* buf = s->ReadBuf();
                 buf[n] = '\0';
+                std::cout << "receive msg is: " << buf << std::endl;
                 //call Handler...
                 auto toWrite = Handler(buf);
                 //error happened, close fd...

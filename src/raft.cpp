@@ -42,6 +42,8 @@ RaftNode::RaftNode(std::string confPath){
     server = new Server(raftConf->port);
     //note this...
     logTerm[0] = 0;
+
+    currentTerm = 0;
 }
 
 void RaftNode::ReinitilAfterElection(){
@@ -315,28 +317,36 @@ std::string RaftNode::ServerHandler(char* buf){
     std::string input(buf);
     std::vector<std::string> commands = SplitStr(input, '*');
     for(auto command : commands){
+        std::cout << "command is: " << command << std::endl;
         std::vector<std::string> items = SplitStr(command, '\t');
         std::string operation = items[0];
         boost::algorithm::to_upper(items[0]);
         if(operation == "PUT"){
             if(items.size() == 3){
                 if(this->Put(items[1], items[2])){
-                    return "OK";
+                    return "OK\t";
                 }
             }
-            return "ERROR";
+            return "ERROR\t";
         } else if(operation == "GET"){
             if(items.size() == 2){
-                return this->Get(items[1]);
+                std::string val = this->Get(items[1]);
+                //std::cout << "result of get op is " << val << std::endl;
+                //std::cout << "result of get op is " << (val.length() == 0) << std::endl;
+                if(val == ""){
+                    return "nil\t";
+                }
+                //std::cout << "ret msg is: " << msg << std::endl;
+                return val + "\t";
             }
-            return "ERROR";
+            return "ERROR\t";
         } else if(operation == "DEL"){
             if(items.size() == 2){
                 if(this->Del(items[1])){
-                    return "OK";
+                    return "OK\t";
                 }
             }
-            return "ERROR";
+            return "ERROR\t";
         } else if(operation == "APPENDENTRIES"){
             uint64_t leaderTerm = std::stoull(items[1]);
             std::string leaderId_ = items[2];
@@ -388,6 +398,7 @@ std::string RaftNode::ServerHandler(char* buf){
             //TODO, support more command...
         }
     }
+    return "*ERROR\t";
 }
 
 std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int entriesSize){
@@ -569,17 +580,19 @@ void RaftNode::NodeRun(){
 
 void RaftNode::Handle(){
     server->Handler = std::bind(&RaftNode::ServerHandler, this, _1);
+    //server->Handler = std::bind(&RaftNode::TestHanlder, this, _1);
     server->Run();
 }
 
 void RaftNode::Run(){
-    std::thread handle(&RaftNode::Handle, this);
-    std::thread apply(&RaftNode::Apply, this);
-    std::thread run(&RaftNode::NodeRun, this);
-    std::thread flushlog(&RaftNode::FlushLog, this);
+    // std::thread handle(&RaftNode::Handle, this);
+    // std::thread apply(&RaftNode::Apply, this);
+    // std::thread run(&RaftNode::NodeRun, this);
+    // std::thread flushlog(&RaftNode::FlushLog, this);
 
-    handle.join();
-    apply.join();
-    run.join();
-    flushlog.join();
+    // handle.join();
+    // apply.join();
+    // run.join();
+    // flushlog.join();
+    this->Handle();
 }
