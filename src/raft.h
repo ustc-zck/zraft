@@ -43,10 +43,10 @@ class RaftNode{
         void Run();
 
         std::string ServerHandler(char* buf);
-        std::string TestHanlder(char* buf){
-            std::cout << "server recevd msg:" << buf << std::endl;
-            return buf;
-        }
+        // std::string TestHanlder(char* buf){
+        //     std::cout << "server recevd msg:" << buf << std::endl;
+        //     return buf;
+        // }
         void Handle();
 
         std::pair<uint64_t, bool> LeaderSendLogEntries(std::string peer, int entriesSize = 100);

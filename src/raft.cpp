@@ -133,7 +133,7 @@ bool RaftNode::Put(std::string key, std::string value){
     logCommand[index] = command;
     std::cout << "log index is " << index << std::endl;
     std::cout << "last term is " << logTerm[index] << std::endl;
-    std::cout << "last command is " << logCommand[index] << std::endl;
+    //std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
 
@@ -153,7 +153,7 @@ bool RaftNode::Del(std::string key){
     logCommand[index] = command;
     std::cout << "log index is " << index << std::endl;
     std::cout << "current term is " << logTerm[index] << std::endl;
-    std::cout << "last command is " << logCommand[index] << std::endl;
+    //std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
 
@@ -322,7 +322,7 @@ std::string RaftNode::ServerHandler(char* buf){
     std::string input(buf);
     std::vector<std::string> commands = SplitStr(input, '*');
     for(auto command : commands){
-        std::cout << "command is: " << command << std::endl;
+        //std::cout << "command is: " << command << std::endl;
         std::vector<std::string> items = SplitStr(command, '\t');
         std::string operation = items[0];
         boost::algorithm::to_upper(items[0]);
@@ -381,6 +381,7 @@ std::string RaftNode::ServerHandler(char* buf){
             if(items.size() == 5){
                 uint64_t candidateTerm = std::stoull(items[1]);
                 std::string candidateId = items[2];
+                std::cout << "candidate id " << candidateId << " request vote" << std::endl;
                 uint64_t candidateLastLogIndex = std::stoull(items[3]);
                 uint64_t candidateLastLogTerm = std::stoull(items[4]);
                 
@@ -403,16 +404,16 @@ std::string RaftNode::ServerHandler(char* buf){
             //TODO, support more command...
         }
     }
-    return "*ERROR\t";
+    return "ERROR\t";
 }
 
 std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int entriesSize){
     if(role != LEADER){
-        return std::make_pair(-1, false);
+        return std::make_pair(0, false);
     }
     auto s= new Socket();
     if(s->Connect(peer) < 0){
-        return std::make_pair(-1, false);
+        return std::make_pair(0, false);
     }
     std::string requestMsg = "*";
     requestMsg += "\t";
@@ -440,7 +441,7 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     requestMsg += "\t";
 
     if(s->Send(&requestMsg[0]) < 0){
-        return std::make_pair(-1, false);
+        return std::make_pair(0, false);
     }
     if(s->Recev() > 0){
         auto resp = std::string(s->ReadBuf());
@@ -461,13 +462,15 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
 
 std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
     if(role != CANDIDATE){
-        return std::make_pair(-1, false);
+        return std::make_pair(0, false);
     }
-    auto s= new Socket();
+    auto s = new Socket();
     if(s->Connect(peer) < 0){
-        return std::make_pair(-1, false);
+        return std::make_pair(0, false);
     }
     std::string requestMsg = "*";
+    requestMsg += "\t";
+    requestMsg += "REQUESTVOTE";
     requestMsg += "\t";
     requestMsg += std::to_string(currentTerm);
     requestMsg += "\t";
@@ -479,8 +482,10 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
     requestMsg += "\t";
 
     if(s->Send(&requestMsg[0]) < 0){
-        return std::make_pair(-1, false);
+        return std::make_pair(0, false);
     }
+    std::cout << "request vote from " << peer << std::endl;
+
     if(s->Recev() > 0){
         auto resp = std::string(s->ReadBuf());
         std::vector<std::string> items = SplitStr(resp, '\t');
@@ -495,7 +500,7 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
         }
     }
     delete s;
-    return std::make_pair(-1, false);
+    return std::make_pair(0, false);
 }
 
 
@@ -542,43 +547,53 @@ void RaftNode::CandidateRun(){
     votes = 1;
     startElectionTime = GetCurrentMillSeconds();
     auto randomSleepTime = uint64_t(GenerateRandomNumber() * electionTimeOut);
+    //std::cout << "sleep random milliseconds " << randomSleepTime << std::endl;
     usleep(randomSleepTime);
     //call request vote rpc, update votes...
     for(auto peer : peers){
+        //std::cout << "request vote from peer " << peer << std::endl;
         auto ret = CandidataRequestVote(peer);
+        //std::cout << "result of requst vote is " << ret.first << "\t" << ret.second << std::endl;
         if(ret.first > currentTerm){
+            //can not be chosen as leader...
             currentTerm = ret.first;
             //each vote in each term...
             voteFor = "NONE";
             role = FOLLOWER;
-            return;
+            break;
         } else if(ret.second == true){
             votes++;
         } else{
-            //not get voted...
+            continue;
         }
     }
     if(role == CANDIDATE && votes > (1 + peers.size()) / 2.0){
         role = LEADER;
+        std::cout << nodeId << " is chosen as leader." << std::endl;
         this->ReinitilAfterElection();
         return;
     }
     if(role == CANDIDATE){
-        auto requestVoteCost = GetCurrentMillSeconds() - startElectionTime;
-        usleep(electionTimeOut - randomSleepTime - requestVoteCost);
-        return;
+        uint64_t requestVoteCost = GetCurrentMillSeconds() - startElectionTime;
+        if(randomSleepTime + requestVoteCost < electionTimeOut){
+            //std::cout << "sleep time for " << electionTimeOut - randomSleepTime - requestVoteCost << std::endl;
+            usleep(electionTimeOut - randomSleepTime - requestVoteCost);
+        } 
     }
+    //for debug...
     return;
 }
 
 void RaftNode::NodeRun(){
-    while(1){
+    while(true){
         if(role == LEADER){
             LeaderRun();
         } else if(role == FOLLOWER){
             FollowerRun();
-        } else{
+        } else if(role == CANDIDATE){
             CandidateRun();
+        } else{
+            continue;
         }
     }
 }
@@ -590,14 +605,12 @@ void RaftNode::Handle(){
 }
 
 void RaftNode::Run(){
-    // std::thread handle(&RaftNode::Handle, this);
-    // std::thread apply(&RaftNode::Apply, this);
-    // std::thread run(&RaftNode::NodeRun, this);
-    // std::thread flushlog(&RaftNode::FlushLog, this);
-
-    // handle.join();
-    // apply.join();
-    // run.join();
-    // flushlog.join();
-    this->Handle();
+    std::thread handle(&RaftNode::Handle, this);
+    std::thread apply(&RaftNode::Apply, this);
+    std::thread run(&RaftNode::NodeRun, this);
+    std::thread flushlog(&RaftNode::FlushLog, this);
+    handle.join();
+    apply.join();
+    run.join();
+    flushlog.join();
 }
