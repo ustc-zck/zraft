@@ -1,0 +1,97 @@
+2022/02/21-00:11:57.466010 7f8a07d04a80 RocksDB version: 6.9.4
+2022/02/21-00:11:57.466098 7f8a07d04a80 Git sha rocksdb_build_git_sha:0ef925153d9abe6d591f04516b234b12cdcda154
+2022/02/21-00:11:57.466101 7f8a07d04a80 Compile date Feb  2 2022
+2022/02/21-00:11:57.466104 7f8a07d04a80 DB SUMMARY
+2022/02/21-00:11:57.466214 7f8a07d04a80 CURRENT file:  CURRENT
+2022/02/21-00:11:57.466216 7f8a07d04a80 IDENTITY file:  IDENTITY
+2022/02/21-00:11:57.466224 7f8a07d04a80 MANIFEST file:  MANIFEST-000278 size: 62 Bytes
+2022/02/21-00:11:57.466226 7f8a07d04a80 SST files in rocksdb/ dir, Total Num: 0, files: 
+2022/02/21-00:11:57.466295 7f8a07d04a80 Write Ahead Log file in rocksdb: 000279.log size: 0 ; 
+2022/02/21-00:11:57.466300 7f8a07d04a80                         Options.error_if_exists: 0
+2022/02/21-00:11:57.466302 7f8a07d04a80                       Options.create_if_missing: 1
+2022/02/21-00:11:57.466303 7f8a07d04a80                         Options.paranoid_checks: 1
+2022/02/21-00:11:57.466304 7f8a07d04a80                                     Options.env: 0x7f8a08a7e780
+2022/02/21-00:11:57.466307 7f8a07d04a80                                      Options.fs: Posix File System
+2022/02/21-00:11:57.466308 7f8a07d04a80                                Options.info_log: 0x55582c49a9f0
+2022/02/21-00:11:57.466309 7f8a07d04a80                Options.max_file_opening_threads: 16
+2022/02/21-00:11:57.466310 7f8a07d04a80                              Options.statistics: (nil)
+2022/02/21-00:11:57.466312 7f8a07d04a80                               Options.use_fsync: 0
+2022/02/21-00:11:57.466313 7f8a07d04a80                       Options.max_log_file_size: 0
+2022/02/21-00:11:57.466314 7f8a07d04a80                  Options.max_manifest_file_size: 1073741824
+2022/02/21-00:11:57.466315 7f8a07d04a80                   Options.log_file_time_to_roll: 0
+2022/02/21-00:11:57.466316 7f8a07d04a80                       Options.keep_log_file_num: 1000
+2022/02/21-00:11:57.466318 7f8a07d04a80                    Options.recycle_log_file_num: 0
+2022/02/21-00:11:57.466319 7f8a07d04a80                         Options.allow_fallocate: 1
+2022/02/21-00:11:57.466320 7f8a07d04a80                        Options.allow_mmap_reads: 0
+2022/02/21-00:11:57.466321 7f8a07d04a80                       Options.allow_mmap_writes: 0
+2022/02/21-00:11:57.466322 7f8a07d04a80                        Options.use_direct_reads: 0
+2022/02/21-00:11:57.466323 7f8a07d04a80                        Options.use_direct_io_for_flush_and_compaction: 0
+2022/02/21-00:11:57.466324 7f8a07d04a80          Options.create_missing_column_families: 0
+2022/02/21-00:11:57.466325 7f8a07d04a80                              Options.db_log_dir: 
+2022/02/21-00:11:57.466327 7f8a07d04a80                                 Options.wal_dir: rocksdb
+2022/02/21-00:11:57.466328 7f8a07d04a80                Options.table_cache_numshardbits: 6
+2022/02/21-00:11:57.466329 7f8a07d04a80                      Options.max_subcompactions: 1
+2022/02/21-00:11:57.466330 7f8a07d04a80                  Options.max_background_flushes: -1
+2022/02/21-00:11:57.466331 7f8a07d04a80                         Options.WAL_ttl_seconds: 0
+2022/02/21-00:11:57.466332 7f8a07d04a80                       Options.WAL_size_limit_MB: 0
+2022/02/21-00:11:57.466334 7f8a07d04a80                        Options.max_write_batch_group_size_bytes: 1048576
+2022/02/21-00:11:57.466335 7f8a07d04a80             Options.manifest_preallocation_size: 4194304
+2022/02/21-00:11:57.466336 7f8a07d04a80                     Options.is_fd_close_on_exec: 1
+2022/02/21-00:11:57.466337 7f8a07d04a80                   Options.advise_random_on_open: 1
+2022/02/21-00:11:57.466338 7f8a07d04a80                    Options.db_write_buffer_size: 0
+2022/02/21-00:11:57.466340 7f8a07d04a80                    Options.write_buffer_manager: 0x55582c4917c0
+2022/02/21-00:11:57.466341 7f8a07d04a80         Options.access_hint_on_compaction_start: 1
+2022/02/21-00:11:57.466342 7f8a07d04a80  Options.new_table_reader_for_compaction_inputs: 0
+2022/02/21-00:11:57.466343 7f8a07d04a80           Options.random_access_max_buffer_size: 1048576
+2022/02/21-00:11:57.466344 7f8a07d04a80                      Options.use_adaptive_mutex: 0
+2022/02/21-00:11:57.466358 7f8a07d04a80                            Options.rate_limiter: (nil)
+2022/02/21-00:11:57.466360 7f8a07d04a80     Options.sst_file_manager.rate_bytes_per_sec: 0
+2022/02/21-00:11:57.466362 7f8a07d04a80                       Options.wal_recovery_mode: 2
+2022/02/21-00:11:57.466363 7f8a07d04a80                  Options.enable_thread_tracking: 0
+2022/02/21-00:11:57.466364 7f8a07d04a80                  Options.enable_pipelined_write: 0
+2022/02/21-00:11:57.466365 7f8a07d04a80                  Options.unordered_write: 0
+2022/02/21-00:11:57.466366 7f8a07d04a80         Options.allow_concurrent_memtable_write: 1
+2022/02/21-00:11:57.466367 7f8a07d04a80      Options.enable_write_thread_adaptive_yield: 1
+2022/02/21-00:11:57.466368 7f8a07d04a80             Options.write_thread_max_yield_usec: 100
+2022/02/21-00:11:57.466369 7f8a07d04a80            Options.write_thread_slow_yield_usec: 3
+2022/02/21-00:11:57.466370 7f8a07d04a80                               Options.row_cache: None
+2022/02/21-00:11:57.466371 7f8a07d04a80                              Options.wal_filter: None
+2022/02/21-00:11:57.466373 7f8a07d04a80             Options.avoid_flush_during_recovery: 0
+2022/02/21-00:11:57.466374 7f8a07d04a80             Options.allow_ingest_behind: 0
+2022/02/21-00:11:57.466375 7f8a07d04a80             Options.preserve_deletes: 0
+2022/02/21-00:11:57.466376 7f8a07d04a80             Options.two_write_queues: 0
+2022/02/21-00:11:57.466377 7f8a07d04a80             Options.manual_wal_flush: 0
+2022/02/21-00:11:57.466378 7f8a07d04a80             Options.atomic_flush: 0
+2022/02/21-00:11:57.466379 7f8a07d04a80             Options.avoid_unnecessary_blocking_io: 0
+2022/02/21-00:11:57.466380 7f8a07d04a80                 Options.persist_stats_to_disk: 0
+2022/02/21-00:11:57.466381 7f8a07d04a80                 Options.write_dbid_to_manifest: 0
+2022/02/21-00:11:57.466382 7f8a07d04a80                 Options.log_readahead_size: 0
+2022/02/21-00:11:57.466384 7f8a07d04a80                 Options.file_checksum_gen_factory: Unknown
+2022/02/21-00:11:57.466385 7f8a07d04a80                 Options.best_efforts_recovery: 0
+2022/02/21-00:11:57.466387 7f8a07d04a80             Options.max_background_jobs: 16
+2022/02/21-00:11:57.466388 7f8a07d04a80             Options.max_background_compactions: -1
+2022/02/21-00:11:57.466389 7f8a07d04a80             Options.avoid_flush_during_shutdown: 0
+2022/02/21-00:11:57.466390 7f8a07d04a80           Options.writable_file_max_buffer_size: 1048576
+2022/02/21-00:11:57.466391 7f8a07d04a80             Options.delayed_write_rate : 16777216
+2022/02/21-00:11:57.466393 7f8a07d04a80             Options.max_total_wal_size: 0
+2022/02/21-00:11:57.466394 7f8a07d04a80             Options.delete_obsolete_files_period_micros: 21600000000
+2022/02/21-00:11:57.466395 7f8a07d04a80                   Options.stats_dump_period_sec: 600
+2022/02/21-00:11:57.466396 7f8a07d04a80                 Options.stats_persist_period_sec: 600
+2022/02/21-00:11:57.466397 7f8a07d04a80                 Options.stats_history_buffer_size: 1048576
+2022/02/21-00:11:57.466398 7f8a07d04a80                          Options.max_open_files: -1
+2022/02/21-00:11:57.466399 7f8a07d04a80                          Options.bytes_per_sync: 0
+2022/02/21-00:11:57.466401 7f8a07d04a80                      Options.wal_bytes_per_sync: 0
+2022/02/21-00:11:57.466402 7f8a07d04a80                   Options.strict_bytes_per_sync: 0
+2022/02/21-00:11:57.466403 7f8a07d04a80       Options.compaction_readahead_size: 0
+2022/02/21-00:11:57.466404 7f8a07d04a80 Compression algorithms supported:
+2022/02/21-00:11:57.466406 7f8a07d04a80 	kZSTDNotFinalCompression supported: 1
+2022/02/21-00:11:57.466409 7f8a07d04a80 	kZSTD supported: 1
+2022/02/21-00:11:57.466411 7f8a07d04a80 	kXpressCompression supported: 0
+2022/02/21-00:11:57.466412 7f8a07d04a80 	kLZ4HCCompression supported: 1
+2022/02/21-00:11:57.466414 7f8a07d04a80 	kLZ4Compression supported: 1
+2022/02/21-00:11:57.466415 7f8a07d04a80 	kBZip2Compression supported: 1
+2022/02/21-00:11:57.466416 7f8a07d04a80 	kZlibCompression supported: 1
+2022/02/21-00:11:57.466425 7f8a07d04a80 	kSnappyCompression supported: 1
+2022/02/21-00:11:57.466441 7f8a07d04a80 Fast CRC32 supported: Supported on x86
+2022/02/21-00:11:57.466512 7f8a07d04a80 [_impl/db_impl.cc:400] Shutdown: canceling all background work
+2022/02/21-00:11:57.466552 7f8a07d04a80 [_impl/db_impl.cc:577] Shutdown complete

@@ -27,6 +27,8 @@ RaftNode::RaftNode(std::string confPath){
     logIndex.clear();
     logTerm.clear();
     logCommand.clear();
+    nextIndex.clear();
+    matchIndex.clear();
     //Not voted for any server...
     votes = 0;
     voteFor = "NONE";
@@ -52,6 +54,7 @@ void RaftNode::ReinitilAfterElection(){
         matchIndex[peer] = 0;
     }
 }
+
 
 RaftNode::~RaftNode(){
     delete db;
@@ -412,11 +415,13 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     if(role != LEADER){
         return std::make_pair(0, false);
     }
-    auto s= new Socket();
+    auto s = new Socket();
     if(s->Connect(peer) < 0){
         return std::make_pair(0, false);
     }
     std::string requestMsg = "*";
+    requestMsg += "\t";
+    requestMsg += "APPENDENTRIES";
     requestMsg += "\t";
     requestMsg += currentTerm;
     requestMsg += "\t";
@@ -488,7 +493,7 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
         auto resp = std::string(s->ReadBuf());
         std::vector<std::string> items = SplitStr(resp, '\t');
         if(items.size() == 2){
-            if(items[2] == "TRUE"){
+            if(items[1] == "TRUE"){
                 return std::make_pair(std::stoull(items[0]), true);
             } else{
                 return std::make_pair(std::stoull(items[0]), false);
@@ -498,11 +503,13 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
     return std::make_pair(0, false);
 }
 
-
 //run on leader node...
 void RaftNode::LeaderRun(){
     for(auto peer : peers){
+        std::cout << "last log index is " << this->LastLogIndex() << std::endl;
+        std::cout << "next index is " << nextIndex[peer] << std::endl;
         if(this->LastLogIndex() >= nextIndex[peer]){
+            std::cout << "nodeId " << nodeId << " send log entries " << std::endl;
             //call append entries rpc in paralles...
             auto ret = this->LeaderSendLogEntries(peer);
             if(ret.first > currentTerm){
@@ -525,6 +532,7 @@ void RaftNode::LeaderRun(){
             }
         } else{
             //send heart beat...
+            std::cout << "nodeId " << nodeId << " send heart beat " << std::endl;
             this->LeaderSendLogEntries(peer);
         }
     }
@@ -561,6 +569,7 @@ void RaftNode::CandidateRun(){
             break;
         } else if(ret.second == true){
             votes++;
+            std::cout << "get voted from " << peer << std::endl;
         } else{
             continue;
         }

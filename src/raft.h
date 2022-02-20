@@ -52,7 +52,6 @@ class RaftNode{
         std::pair<uint64_t, bool> LeaderSendLogEntries(std::string peer, int entriesSize = 100);
         std::pair<uint64_t, bool> CandidataRequestVote(std::string peer);
 
-
     private:
         //db operation of rocksdb, not used for client...
         std::string GetRocks(std::string key);
