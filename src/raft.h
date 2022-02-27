@@ -72,6 +72,13 @@ class RaftNode{
                 return logIndex.back();
             }
         }
+        uint64_t FirstLogIndex(){
+            if(logIndex.size() == 0){
+                return 0;
+            } else{
+                return logIndex.front();
+            }
+        }
         void UpdateCommitIndex();
     private:
         //node id, noted as addr...
