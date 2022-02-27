@@ -8,6 +8,8 @@
 #include "thread.h"
 #include <iostream>
 
+#pragma once
+
 //to be optimized...
 const int MAXEVENTS = 4096;
 const int MAXTHREADS = 1024;

@@ -15,7 +15,7 @@ RaftNode::RaftNode(std::string confPath){
     options.IncreaseParallelism();  // Optimize RocksDB...
     options.OptimizeLevelStyleCompaction();
     options.create_if_missing = true;  // create the DB if it's not already present...
-    s = rocksdb::DB::Open(options, "rocksdb2/", &db);
+    s = rocksdb::DB::Open(options, "rocksdb1/", &db);
     if(!s.ok()){
         abort();
     }
@@ -406,9 +406,34 @@ std::string RaftNode::ServerHandler(char* buf){
             uint64_t prevLogTerm = std::stoull(items[4]);
             //std::cout << "prevLogTerm is " << prevLogTerm << std::endl;
             std::vector<std::tuple<uint64_t, uint64_t, std::string>> entries;
-            for(int i = 5; i < items.size() - 1; i += 3){
-                auto t = std::tuple<uint64_t, uint64_t, std::string>{std::stoull(items[i]), std::stoull(items[i+1]), items[i+2]};
-                entries.push_back(t);
+            
+            // for(int i = 5; i < items.size() - 1; i += 3){
+            //     auto t = std::tuple<uint64_t, uint64_t, std::string>{std::stoull(items[i]), std::stoull(items[i+1]), items[i+2]};
+            //     entries.push_back(t);
+            // }
+            int i = 5;
+            while(i < items.size() - 1){
+                if(items[i + 2] == "PUT"){
+                    std::string command = items[i+2];
+                    command += "\t";
+                    command += items[i+3];
+                    command += "\t";
+                    command += items[i+4];
+                    command += "\t";
+                    auto t = std::tuple<uint64_t, uint64_t, std::string>{std::stoull(items[i]), std::stoull(items[i+1]), command};
+                    entries.push_back(t);
+                    i += 5;
+                } else if(items[i + 2] == "DEL"){
+                    std::string command = items[i+2];
+                    command += "\t";
+                    command += items[i+3];
+                    command += "\t";
+                    auto t = std::tuple<uint64_t, uint64_t, std::string>{std::stoull(items[i]), std::stoull(items[i+1]), command};
+                    entries.push_back(t);
+                    i += 4;
+                } else {
+                    //TODO, support more commands...
+                }
             }
             uint64_t leaderCommit = std::stoull(items.back());
             //std::cout << "leader commit is " << leaderCommit << std::endl;
@@ -426,6 +451,12 @@ std::string RaftNode::ServerHandler(char* buf){
                 resp += "\t";
             }
             std::cout << "resp of append entries is " << resp << std::endl;
+            std::cout << "log size is " << logIndex.size() << std::endl;
+            for(int i = 0; i < logIndex.size(); i++){
+                std::cout << "log index is " << logIndex[i] << std::endl;
+                std::cout << "term is " << logTerm[logIndex[i]] << std::endl;
+                std::cout << "command is " << logCommand[logIndex[i]] << std::endl;
+            }
             return resp;
         } else if(operation == "REQUESTVOTE"){
             if(items.size() == 5){
@@ -449,6 +480,7 @@ std::string RaftNode::ServerHandler(char* buf){
                     resp += "\t";
                 }
                 std::cout << "request vote resp is " << resp << std::endl; 
+              
                 return resp;
             }
         }else{

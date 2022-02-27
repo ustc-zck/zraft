@@ -9,9 +9,5 @@ int main(){
         std::cout << "sucessfully put kv into raft" << std::endl;
     }
     std::cout << "val is: " << cli->Get("hello1") << std::endl;
-
-    if(cli->Del("hello1")){
-        std::cout << "sucessfully del kv from raft" << std::endl;
-    }
     return 0;
 }
