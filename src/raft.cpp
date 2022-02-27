@@ -15,7 +15,7 @@ RaftNode::RaftNode(std::string confPath){
     options.IncreaseParallelism();  // Optimize RocksDB...
     options.OptimizeLevelStyleCompaction();
     options.create_if_missing = true;  // create the DB if it's not already present...
-    s = rocksdb::DB::Open(options, "rocksdb/", &db);
+    s = rocksdb::DB::Open(options, "rocksdb2/", &db);
     if(!s.ok()){
         abort();
     }
@@ -135,8 +135,8 @@ bool RaftNode::Put(std::string key, std::string value){
     command += value;
     command += "\t";
     logCommand[index] = command;
-    std::cout << "log index is " << index << std::endl;
-    std::cout << "last term is " << logTerm[index] << std::endl;
+    //std::cout << "log index is " << index << std::endl;
+    //std::cout << "last term is " << logTerm[index] << std::endl;
     //std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
@@ -155,8 +155,8 @@ bool RaftNode::Del(std::string key){
     command += key;
     command += "\t";
     logCommand[index] = command;
-    std::cout << "log index is " << index << std::endl;
-    std::cout << "current term is " << logTerm[index] << std::endl;
+    //std::cout << "log index is " << index << std::endl;
+    //std::cout << "current term is " << logTerm[index] << std::endl;
     //std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
@@ -252,13 +252,13 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
     }
 
     lastReceiveLogEntriesTime = GetCurrentMillSeconds();
-    std::cout << "time is " << lastReceiveLogEntriesTime << std::endl;
+    //std::cout << "time is " << lastReceiveLogEntriesTime << std::endl;
     if(leaderId == "NONE"){
         leaderId = leaderId_;   
     }
 
-    std::cout << "leader term is " << leaderTerm << std::endl;
-    std::cout << "current term is " << currentTerm << std::endl;
+    //std::cout << "leader term is " << leaderTerm << std::endl;
+    //std::cout << "current term is " << currentTerm << std::endl;
     if(leaderTerm < currentTerm){
         return std::make_pair(currentTerm, false);
     } else if (leaderTerm > currentTerm) {
@@ -268,13 +268,13 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
 
     }
     //default unordered map contains 0 or not???
-    std::cout << "find pre log index is " << (logTerm.find(prevLogIndex) == logTerm.end()) << std::endl;
+    //std::cout << "find pre log index is " << (logTerm.find(prevLogIndex) == logTerm.end()) << std::endl;
     if(logTerm.find(prevLogIndex) == logTerm.end()){
-        std::cout << "not find" << std::endl;
+        //std::cout << "not find" << std::endl;
         return std::make_pair(currentTerm, false);
     }
-    std::cout << "pre log term is " << logTerm[prevLogIndex] << std::endl;
-    std::cout << "pre log term is " << prevLogTerm << std::endl;
+    //std::cout << "pre log term is " << logTerm[prevLogIndex] << std::endl;
+    //std::cout << "pre log term is " << prevLogTerm << std::endl;
 
     if(logTerm[prevLogIndex] != prevLogTerm){
         //conflict...
@@ -286,15 +286,15 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
             if(logIndex[i] > prevLogIndex){
                 logTerm.erase(logIndex[i]);
                 logCommand.erase(logIndex[i]);
-                std::cout << "erase log term " << std::endl;
+                //std::cout << "erase log term " << std::endl;
             }
         }
 
-        std::cout << "size of log index " << logIndex.size() <<  std::endl;
-        std::cout << "erase log index " << std::endl;
-        std::cout << "i is " << i << std::endl;
+        //std::cout << "size of log index " << logIndex.size() <<  std::endl;
+        //std::cout << "erase log index " << std::endl;
+        //std::cout << "i is " << i << std::endl;
         logIndex.erase(logIndex.begin() + i + 1, logIndex.end());
-        std::cout << "size of log index " << logIndex.size() <<  std::endl;
+        //std::cout << "size of log index " << logIndex.size() <<  std::endl;
     }
     //append new entries...
     for(auto entry : entries){
@@ -308,11 +308,11 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
     //update commitIndex...
     commitIndex = std::min(leaderCommit, this->LastLogIndex());
 
-    for(int i = 0; i < logIndex.size(); i++){
-        std::cout << "log index is " << logIndex[i] << std::endl;
-        std::cout << "log term is " << logTerm[logIndex[i]] << std::endl;
-        std::cout << "log command is " << logCommand[logIndex[i]] << std::endl;
-    }
+    // for(int i = 0; i < logIndex.size(); i++){
+    //     std::cout << "log index is " << logIndex[i] << std::endl;
+    //     std::cout << "log term is " << logTerm[logIndex[i]] << std::endl;
+    //     std::cout << "log command is " << logCommand[logIndex[i]] << std::endl;
+    // }
     return std::make_pair(currentTerm, true);
 }
 
@@ -356,6 +356,15 @@ std::string RaftNode::ServerHandler(char* buf){
         std::string operation = items[0];
         boost::algorithm::to_upper(items[0]);
         if(operation == "PUT"){
+            if(role != LEADER){
+                RaftClient* cli = new RaftClient(leaderId);
+                if (cli->Put(items[1], items[2])){
+                    return "OK\t";
+                }else {
+                    return "ERROR\t";
+                }
+                delete cli;
+            }
             if(items.size() == 3){
                 if(this->Put(items[1], items[2])){
                     return "OK\t";
@@ -365,16 +374,22 @@ std::string RaftNode::ServerHandler(char* buf){
         } else if(operation == "GET"){
             if(items.size() == 2){
                 std::string val = this->Get(items[1]);
-                //std::cout << "result of get op is " << val << std::endl;
-                //std::cout << "result of get op is " << (val.length() == 0) << std::endl;
                 if(val == ""){
                     return "nil\t";
                 }
-                //std::cout << "ret msg is: " << msg << std::endl;
                 return val + "\t";
             }
             return "ERROR\t";
         } else if(operation == "DEL"){
+            if(role != LEADER){
+                RaftClient* cli = new RaftClient(leaderId);
+                if (cli->Del(items[1])){
+                    return "OK\t";
+                }else {
+                    return "ERROR\t";
+                }
+                delete cli;
+            }
             if(items.size() == 2){
                 if(this->Del(items[1])){
                     return "OK\t";
@@ -383,20 +398,20 @@ std::string RaftNode::ServerHandler(char* buf){
             return "ERROR\t";
         } else if(operation == "APPENDENTRIES"){
             uint64_t leaderTerm = std::stoull(items[1]);
-            std::cout << "leader term is " << leaderTerm << std::endl;
+            //std::cout << "leader term is " << leaderTerm << std::endl;
             std::string leaderId_ = items[2];
-             std::cout << "leader id is " << leaderId_ << std::endl;
+            //std::cout << "leader id is " << leaderId_ << std::endl;
             uint64_t prevLogIndex = std::stoull(items[3]);
-            std::cout << "prevLogIndex is " << prevLogIndex << std::endl;
+            //std::cout << "prevLogIndex is " << prevLogIndex << std::endl;
             uint64_t prevLogTerm = std::stoull(items[4]);
-            std::cout << "prevLogTerm is " << prevLogTerm << std::endl;
+            //std::cout << "prevLogTerm is " << prevLogTerm << std::endl;
             std::vector<std::tuple<uint64_t, uint64_t, std::string>> entries;
             for(int i = 5; i < items.size() - 1; i += 3){
                 auto t = std::tuple<uint64_t, uint64_t, std::string>{std::stoull(items[i]), std::stoull(items[i+1]), items[i+2]};
                 entries.push_back(t);
             }
             uint64_t leaderCommit = std::stoull(items.back());
-            std::cout << "leader commit is " << leaderCommit << std::endl;
+            //std::cout << "leader commit is " << leaderCommit << std::endl;
             std::pair<uint64_t, bool> ret = this->AppendEntries(leaderTerm, leaderId_, prevLogIndex, prevLogTerm, entries, leaderCommit);
             std::string resp;
             if(ret.second == true){
@@ -466,7 +481,7 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     requestMsg += std::to_string(prevLogTerm);
     requestMsg += "\t";
 
-    std::cout << "leader " << nodeId << " send message1: " << requestMsg << std::endl; 
+    //std::cout << "leader " << nodeId << " send message1: " << requestMsg << std::endl; 
 
     uint64_t i;
     for(int i = nextIndex[peer] - this->FirstLogIndex(); i < logIndex.size() && i < nextIndex[peer] - this->FirstLogIndex() + 100; i++){
@@ -480,7 +495,7 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     requestMsg += std::to_string(commitIndex);
     requestMsg += "\t";
 
-    std::cout << "leader " << nodeId << " send message2: " << requestMsg << std::endl; 
+    std::cout << "leader " << nodeId << " send message: " << requestMsg << std::endl; 
 
     if(s->Send(&requestMsg[0]) < 0){
         return std::make_pair(0, false);
@@ -655,8 +670,10 @@ void RaftNode::Run(){
     std::thread apply(&RaftNode::Apply, this);
     std::thread run(&RaftNode::NodeRun, this);
     std::thread flushlog(&RaftNode::FlushLog, this);
+    std::thread debug(&RaftNode::Debug, this);
     handle.join();
     apply.join();
     run.join();
     flushlog.join();
+    debug.join();
 }

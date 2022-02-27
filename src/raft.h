@@ -16,6 +16,7 @@
 #include "rocksdb/options.h"
 #include "utils.h"
 #include "../lib/lei/src/server.h"
+#include "client.h"
 
 
 class RaftNode{
@@ -80,6 +81,16 @@ class RaftNode{
             }
         }
         void UpdateCommitIndex();
+
+        void Debug(){
+            while(true){
+                if(GetCurrentMillSeconds() % 1000 == 0){
+                    std::cout << "current term is " << currentTerm << std::endl;
+                    std::cout << "last log index is " << this->LastLogIndex() << std::endl;
+                    std::cout << "role is " << role << std::endl;
+                }
+            }   
+        }
     private:
         //node id, noted as addr...
         std::string nodeId;
