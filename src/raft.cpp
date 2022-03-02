@@ -15,7 +15,7 @@ RaftNode::RaftNode(std::string confPath){
     options.IncreaseParallelism();  // Optimize RocksDB...
     options.OptimizeLevelStyleCompaction();
     options.create_if_missing = true;  // create the DB if it's not already present...
-    s = rocksdb::DB::Open(options, "rocksdb1/", &db);
+    s = rocksdb::DB::Open(options, "rocksdb10/", &db);
     if(!s.ok()){
         abort();
     }
@@ -135,9 +135,9 @@ bool RaftNode::Put(std::string key, std::string value){
     command += value;
     command += "\t";
     logCommand[index] = command;
-    //std::cout << "log index is " << index << std::endl;
-    //std::cout << "last term is " << logTerm[index] << std::endl;
-    //std::cout << "last command is " << logCommand[index] << std::endl;
+    ////std::cout << "log index is " << index << std::endl;
+    ////std::cout << "last term is " << logTerm[index] << std::endl;
+    ////std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
 
@@ -155,9 +155,9 @@ bool RaftNode::Del(std::string key){
     command += key;
     command += "\t";
     logCommand[index] = command;
-    //std::cout << "log index is " << index << std::endl;
-    //std::cout << "current term is " << logTerm[index] << std::endl;
-    //std::cout << "last command is " << logCommand[index] << std::endl;
+    ////std::cout << "log index is " << index << std::endl;
+    ////std::cout << "current term is " << logTerm[index] << std::endl;
+    ////std::cout << "last command is " << logCommand[index] << std::endl;
     return true;
 }
 
@@ -252,13 +252,13 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
     }
 
     lastReceiveLogEntriesTime = GetCurrentMillSeconds();
-    //std::cout << "time is " << lastReceiveLogEntriesTime << std::endl;
+    ////std::cout << "time is " << lastReceiveLogEntriesTime << std::endl;
     if(leaderId == "NONE"){
         leaderId = leaderId_;   
     }
 
-    //std::cout << "leader term is " << leaderTerm << std::endl;
-    //std::cout << "current term is " << currentTerm << std::endl;
+    ////std::cout << "leader term is " << leaderTerm << std::endl;
+    ////std::cout << "current term is " << currentTerm << std::endl;
     if(leaderTerm < currentTerm){
         return std::make_pair(currentTerm, false);
     } else if (leaderTerm > currentTerm) {
@@ -268,13 +268,13 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
 
     }
     //default unordered map contains 0 or not???
-    //std::cout << "find pre log index is " << (logTerm.find(prevLogIndex) == logTerm.end()) << std::endl;
+    ////std::cout << "find pre log index is " << (logTerm.find(prevLogIndex) == logTerm.end()) << std::endl;
     if(logTerm.find(prevLogIndex) == logTerm.end()){
-        //std::cout << "not find" << std::endl;
+        ////std::cout << "not find" << std::endl;
         return std::make_pair(currentTerm, false);
     }
-    //std::cout << "pre log term is " << logTerm[prevLogIndex] << std::endl;
-    //std::cout << "pre log term is " << prevLogTerm << std::endl;
+    ////std::cout << "pre log term is " << logTerm[prevLogIndex] << std::endl;
+    ////std::cout << "pre log term is " << prevLogTerm << std::endl;
 
     if(logTerm[prevLogIndex] != prevLogTerm){
         //conflict...
@@ -286,15 +286,15 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
             if(logIndex[i] > prevLogIndex){
                 logTerm.erase(logIndex[i]);
                 logCommand.erase(logIndex[i]);
-                //std::cout << "erase log term " << std::endl;
+                ////std::cout << "erase log term " << std::endl;
             }
         }
 
-        //std::cout << "size of log index " << logIndex.size() <<  std::endl;
-        //std::cout << "erase log index " << std::endl;
-        //std::cout << "i is " << i << std::endl;
+        ////std::cout << "size of log index " << logIndex.size() <<  std::endl;
+        ////std::cout << "erase log index " << std::endl;
+        ////std::cout << "i is " << i << std::endl;
         logIndex.erase(logIndex.begin() + i + 1, logIndex.end());
-        //std::cout << "size of log index " << logIndex.size() <<  std::endl;
+        ////std::cout << "size of log index " << logIndex.size() <<  std::endl;
     }
     //append new entries...
     for(auto entry : entries){
@@ -309,9 +309,9 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
     commitIndex = std::min(leaderCommit, this->LastLogIndex());
 
     // for(int i = 0; i < logIndex.size(); i++){
-    //     std::cout << "log index is " << logIndex[i] << std::endl;
-    //     std::cout << "log term is " << logTerm[logIndex[i]] << std::endl;
-    //     std::cout << "log command is " << logCommand[logIndex[i]] << std::endl;
+    //     //std::cout << "log index is " << logIndex[i] << std::endl;
+    //     //std::cout << "log term is " << logTerm[logIndex[i]] << std::endl;
+    //     //std::cout << "log command is " << logCommand[logIndex[i]] << std::endl;
     // }
     return std::make_pair(currentTerm, true);
 }
@@ -351,7 +351,7 @@ std::string RaftNode::ServerHandler(char* buf){
     std::cout << "receive message " << input << std::endl;
     std::vector<std::string> commands = SplitStr(input, '*');
     for(auto command : commands){
-        //std::cout << "command is: " << command << std::endl;
+        ////std::cout << "command is: " << command << std::endl;
         std::vector<std::string> items = SplitStr(command, '\t');
         std::string operation = items[0];
         boost::algorithm::to_upper(items[0]);
@@ -398,13 +398,13 @@ std::string RaftNode::ServerHandler(char* buf){
             return "ERROR\t";
         } else if(operation == "APPENDENTRIES"){
             uint64_t leaderTerm = std::stoull(items[1]);
-            //std::cout << "leader term is " << leaderTerm << std::endl;
+            ////std::cout << "leader term is " << leaderTerm << std::endl;
             std::string leaderId_ = items[2];
-            //std::cout << "leader id is " << leaderId_ << std::endl;
+            ////std::cout << "leader id is " << leaderId_ << std::endl;
             uint64_t prevLogIndex = std::stoull(items[3]);
-            //std::cout << "prevLogIndex is " << prevLogIndex << std::endl;
+            ////std::cout << "prevLogIndex is " << prevLogIndex << std::endl;
             uint64_t prevLogTerm = std::stoull(items[4]);
-            //std::cout << "prevLogTerm is " << prevLogTerm << std::endl;
+            ////std::cout << "prevLogTerm is " << prevLogTerm << std::endl;
             std::vector<std::tuple<uint64_t, uint64_t, std::string>> entries;
             
             // for(int i = 5; i < items.size() - 1; i += 3){
@@ -436,7 +436,14 @@ std::string RaftNode::ServerHandler(char* buf){
                 }
             }
             uint64_t leaderCommit = std::stoull(items.back());
-            //std::cout << "leader commit is " << leaderCommit << std::endl;
+            std::cout << "ledar term is " << leaderTerm << std::endl;
+            std::cout << "leader id is " << leaderId_ << std::endl;
+            std::cout << "prev log index is " << prevLogIndex << std::endl;
+            std::cout << "prev log term is " << prevLogTerm << std::endl;
+            for(auto entry : entries ){
+                std::cout << "commad entry is " << std::get<0>(entry) << " " << std::get<1>(entry) << " "<< std::get<2>(entry) << std::endl;
+            }
+            std::cout << "leader commit is " << leaderCommit << std::endl; 
             std::pair<uint64_t, bool> ret = this->AppendEntries(leaderTerm, leaderId_, prevLogIndex, prevLogTerm, entries, leaderCommit);
             std::string resp;
             if(ret.second == true){
@@ -451,18 +458,17 @@ std::string RaftNode::ServerHandler(char* buf){
                 resp += "\t";
             }
             std::cout << "resp of append entries is " << resp << std::endl;
-            std::cout << "log size is " << logIndex.size() << std::endl;
-            for(int i = 0; i < logIndex.size(); i++){
-                std::cout << "log index is " << logIndex[i] << std::endl;
-                std::cout << "term is " << logTerm[logIndex[i]] << std::endl;
-                std::cout << "command is " << logCommand[logIndex[i]] << std::endl;
-            }
+            // for(int i = 0; i < logIndex.size(); i++){
+            //     std::cout << "log index is " << logIndex[i] << std::endl;
+            //     std::cout << "term is " << logTerm[logIndex[i]] << std::endl;
+            //     std::cout << "command is " << logCommand[logIndex[i]] << std::endl;
+            // }
             return resp;
         } else if(operation == "REQUESTVOTE"){
             if(items.size() == 5){
                 uint64_t candidateTerm = std::stoull(items[1]);
                 std::string candidateId = items[2];
-                std::cout << "candidate id " << candidateId << " request vote" << std::endl;
+                //std::cout << "candidate id " << candidateId << " request vote" << std::endl;
                 uint64_t candidateLastLogIndex = std::stoull(items[3]);
                 uint64_t candidateLastLogTerm = std::stoull(items[4]);
                 
@@ -479,7 +485,7 @@ std::string RaftNode::ServerHandler(char* buf){
                     resp += "FALSE";
                     resp += "\t";
                 }
-                std::cout << "request vote resp is " << resp << std::endl; 
+                //std::cout << "request vote resp is " << resp << std::endl; 
               
                 return resp;
             }
@@ -494,10 +500,7 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     if(role != LEADER){
         return std::make_pair(0, false);
     }
-    auto s = new Socket();
-    if(s->Connect(peer) < 0){
-        return std::make_pair(0, false);
-    }
+  
     std::string requestMsg = "*";
     requestMsg += "\t";
     requestMsg += "APPENDENTRIES";
@@ -513,9 +516,8 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     requestMsg += std::to_string(prevLogTerm);
     requestMsg += "\t";
 
-    //std::cout << "leader " << nodeId << " send message1: " << requestMsg << std::endl; 
-
     uint64_t i;
+    //send at most 100 items at once...
     for(int i = nextIndex[peer] - this->FirstLogIndex(); i < logIndex.size() && i < nextIndex[peer] - this->FirstLogIndex() + 100; i++){
         requestMsg += std::to_string(logIndex[i]);
         requestMsg += "\t";
@@ -527,8 +529,12 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     requestMsg += std::to_string(commitIndex);
     requestMsg += "\t";
 
-    std::cout << "leader " << nodeId << " send message: " << requestMsg << std::endl; 
+    std::cout << "leader " << nodeId << " send log entries " << requestMsg << std::endl; 
 
+    auto s = new Socket();
+    if(s->Connect(peer) < 0){
+        return std::make_pair(0, false);
+    }
     if(s->Send(&requestMsg[0]) < 0){
         return std::make_pair(0, false);
     }
@@ -571,8 +577,8 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
     if(s->Send(&requestMsg[0]) < 0){
         return std::make_pair(0, false);
     }
-    std::cout << "request vote from " << peer << std::endl;
-    std::cout << "current term is " << currentTerm << std::endl;
+    ////std::cout << "request vote from " << peer << std::endl;
+    ////std::cout << "current term is " << currentTerm << std::endl;
 
     if(s->Recev() > 0){
         auto resp = std::string(s->ReadBuf());
@@ -591,10 +597,10 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
 //run on leader node...
 void RaftNode::LeaderRun(){
     for(auto peer : peers){
-        std::cout << "last log index is " << this->LastLogIndex() << std::endl;
-        std::cout << "next index is " << nextIndex[peer] << std::endl;
+        ////std::cout << "last log index is " << this->LastLogIndex() << std::endl;
+        ////std::cout << "next index is " << nextIndex[peer] << std::endl;
         if(this->LastLogIndex() >= nextIndex[peer]){
-            std::cout << "nodeId " << nodeId << " send log entries " << std::endl;
+            ////std::cout << "nodeId " << nodeId << " send log entries " << std::endl;
             //call append entries rpc in paralles...
             auto ret = this->LeaderSendLogEntries(peer);
             if(ret.first > currentTerm){
@@ -617,7 +623,7 @@ void RaftNode::LeaderRun(){
             }
         } else{
             //send heart beat...
-            std::cout << "nodeId " << nodeId << " send heart beat " << std::endl;
+            ////std::cout << "nodeId " << nodeId << " send heart beat " << std::endl;
             this->LeaderSendLogEntries(peer);
         }
     }
@@ -638,15 +644,15 @@ void RaftNode::CandidateRun(){
     votes = 1;
     startElectionTime = GetCurrentMillSeconds();
     auto randomSleepTime = uint64_t(GenerateRandomNumber() * electionTimeOut);
-    //std::cout << "sleep random milliseconds " << randomSleepTime << std::endl;
+    ////std::cout << "sleep random milliseconds " << randomSleepTime << std::endl;
     usleep(randomSleepTime);
     //call request vote rpc, update votes...
     for(auto peer : peers){
-        std::cout << "request vote from peer " << peer << std::endl;
-        std::cout << "current term is " << currentTerm << std::endl;
+        ////std::cout << "request vote from peer " << peer << std::endl;
+        ////std::cout << "current term is " << currentTerm << std::endl;
 
         auto ret = CandidataRequestVote(peer);
-        //std::cout << "result of requst vote is " << ret.first << "\t" << ret.second << std::endl;
+        ////std::cout << "result of requst vote is " << ret.first << "\t" << ret.second << std::endl;
         if(ret.first > currentTerm){
             //can not be chosen as leader...
             currentTerm = ret.first;
@@ -656,21 +662,21 @@ void RaftNode::CandidateRun(){
             break;
         } else if(ret.second == true){
             votes++;
-            std::cout << "get voted from " << peer << std::endl;
+            //std::cout << "get voted from " << peer << std::endl;
         } else{
             continue;
         }
     }
     if(role == CANDIDATE && votes > (1 + peers.size()) / 2.0){
         role = LEADER;
-        std::cout << nodeId << " is chosen as leader." << std::endl;
+        ////std::cout << nodeId << " is chosen as leader." << std::endl;
         this->ReinitilAfterElection();
         return;
     }
     // if(role == CANDIDATE){
     //     uint64_t requestVoteCost = GetCurrentMillSeconds() - startElectionTime;
     //     if(randomSleepTime + requestVoteCost < electionTimeOut){
-    //         //std::cout << "sleep time for " << electionTimeOut - randomSleepTime - requestVoteCost << std::endl;
+    //         ////std::cout << "sleep time for " << electionTimeOut - randomSleepTime - requestVoteCost << std::endl;
     //         usleep(electionTimeOut - randomSleepTime - requestVoteCost);
     //     } 
     // }
@@ -692,8 +698,8 @@ void RaftNode::NodeRun(){
 
 void RaftNode::Handle(){
     server->Handler = std::bind(&RaftNode::ServerHandler, this, _1);
-    server->TimeHandler = std::bind(&RaftNode::CandidateRun, this);
-    server->AddTimeEvent(raftConf->electionTimeOut);
+    //server->TimeHandler = std::bind(&RaftNode::CandidateRun, this);
+    //server->AddTimeEvent(raftConf->electionTimeOut);
     server->Run();
 }
 

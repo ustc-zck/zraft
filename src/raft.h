@@ -53,6 +53,46 @@ class RaftNode{
         std::pair<uint64_t, bool> LeaderSendLogEntries(std::string peer, int entriesSize = 100);
         std::pair<uint64_t, bool> CandidataRequestVote(std::string peer);
 
+        void SetAsLeader(){
+            role = LEADER;
+            currentTerm++;
+            voteFor = "NONE";
+            this->ReinitilAfterElection();
+            leaderId = nodeId;
+        }
+
+        void SetAsFollower(){
+            role = FOLLOWER;
+        }
+
+        void SetAsCandidate(){
+            role = CANDIDATE;
+        }
+
+        void Debug(){
+            // while(true){
+                // if(GetCurrentMillSeconds() % 5000 == 0){
+                    std::cout << "role is " << role << std::endl;
+                    std::cout << "leader is " << leaderId << std::endl;
+                    std::cout << "voted for " << voteFor << std::endl;
+                    std::cout << "current term is " << currentTerm << std::endl;
+                    std::cout << "last log index is " << this->LastLogIndex() << std::endl;
+                    std::cout << "last log term is " << logTerm[this->LastLogIndex()] << std::endl;
+                    std::cout << "last log command is " << logCommand[this->LastLogIndex()] << std::endl;
+                    if(role == LEADER){
+                        for(auto peer : peers){
+                            std::cout << "prev log index of " << peer << " is " << nextIndex[peer] - 1 << "\t";
+                            std::cout << "prev log term of " << peer  << " is " << logTerm[nextIndex[peer] - 1] << std::endl;
+                            std::cout << "next log index of  " << peer << " is " << nextIndex[peer] << std::endl; 
+                        }
+                    }
+                    std::cout << "commit index is " << commitIndex << std::endl;
+                    std::cout << "last applied index is " << lastApplied << std::endl;
+                    std::cout << "\n" << std::endl;
+                // }
+            // }   
+        }
+
     private:
         //db operation of rocksdb, not used for client...
         std::string GetRocks(std::string key);
@@ -82,15 +122,7 @@ class RaftNode{
         }
         void UpdateCommitIndex();
 
-        void Debug(){
-            while(true){
-                if(GetCurrentMillSeconds() % 1000 == 0){
-                    std::cout << "current term is " << currentTerm << std::endl;
-                    std::cout << "last log index is " << this->LastLogIndex() << std::endl;
-                    std::cout << "role is " << role << std::endl;
-                }
-            }   
-        }
+
     private:
         //node id, noted as addr...
         std::string nodeId;

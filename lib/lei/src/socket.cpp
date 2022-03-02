@@ -76,7 +76,7 @@ int Socket::Accept(){
     int new_socket;
     new_socket = accept(socket_fd, (struct sockaddr *) address, (socklen_t*)address);
     if (new_socket < 0) {
-       std::cout << "not socket to accept" << std::endl;
+       //std::cout << "not socket to accept" << std::endl;
        return -1;
     }
     return new_socket;
