@@ -15,7 +15,7 @@ RaftNode::RaftNode(std::string confPath){
     options.IncreaseParallelism();  // Optimize RocksDB...
     options.OptimizeLevelStyleCompaction();
     options.create_if_missing = true;  // create the DB if it's not already present...
-    s = rocksdb::DB::Open(options, "rocksdb10/", &db);
+    s = rocksdb::DB::Open(options, "rocksdb/", &db);
     if(!s.ok()){
         abort();
     }
@@ -542,13 +542,13 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
         auto resp = s->ReadBuf();
         std::cout << "resp is " << resp << std::endl;
         std::vector<std::string> items = SplitStr(resp, '\t');
-        if(items.size() == 2){
-            if(items[1] == "TRUE"){
-                return std::make_pair(std::stoull(items[0]), true);
-            } else{
-                return std::make_pair(std::stoull(items[0]), false);
-            }
+        // if(items.size() == 2){
+        if(items[1] == "TRUE"){
+            return std::make_pair(std::stoull(items[0]), true);
+        } else{
+            return std::make_pair(std::stoull(items[0]), false);
         }
+        // }
     }
     return std::make_pair(0, false);
 }
