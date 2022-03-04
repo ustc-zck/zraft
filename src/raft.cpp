@@ -15,7 +15,7 @@ RaftNode::RaftNode(std::string confPath){
     options.IncreaseParallelism();  // Optimize RocksDB...
     options.OptimizeLevelStyleCompaction();
     options.create_if_missing = true;  // create the DB if it's not already present...
-    s = rocksdb::DB::Open(options, "rocksdb/", &db);
+    s = rocksdb::DB::Open(options, "rocksdb02/", &db);
     if(!s.ok()){
         abort();
     }
@@ -485,8 +485,8 @@ std::string RaftNode::ServerHandler(char* buf){
                     resp += "FALSE";
                     resp += "\t";
                 }
-                //std::cout << "request vote resp is " << resp << std::endl; 
-              
+                std::cout << "request vote resp is " << resp << std::endl; 
+                this->Debug();
                 return resp;
             }
         }else{
@@ -542,13 +542,11 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
         auto resp = s->ReadBuf();
         std::cout << "resp is " << resp << std::endl;
         std::vector<std::string> items = SplitStr(resp, '\t');
-        // if(items.size() == 2){
         if(items[1] == "TRUE"){
             return std::make_pair(std::stoull(items[0]), true);
         } else{
             return std::make_pair(std::stoull(items[0]), false);
         }
-        // }
     }
     return std::make_pair(0, false);
 }
@@ -582,8 +580,9 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
 
     if(s->Recev() > 0){
         auto resp = std::string(s->ReadBuf());
+        std::cout << "resp is " << resp << std::endl;
         std::vector<std::string> items = SplitStr(resp, '\t');
-        if(items.size() == 2){
+        if(items.size() >= 2){
             if(items[1] == "TRUE"){
                 return std::make_pair(std::stoull(items[0]), true);
             } else{
@@ -630,6 +629,7 @@ void RaftNode::LeaderRun(){
 }
 
 void RaftNode::FollowerRun(){
+    //TODO, change this to timer event...
     if(GetCurrentMillSeconds() - lastReceiveLogEntriesTime > electionTimeOut){
         role = CANDIDATE;
     }
@@ -646,7 +646,6 @@ void RaftNode::CandidateRun(){
     auto randomSleepTime = uint64_t(GenerateRandomNumber() * electionTimeOut);
     ////std::cout << "sleep random milliseconds " << randomSleepTime << std::endl;
     usleep(randomSleepTime);
-    //call request vote rpc, update votes...
     for(auto peer : peers){
         ////std::cout << "request vote from peer " << peer << std::endl;
         ////std::cout << "current term is " << currentTerm << std::endl;
@@ -684,14 +683,15 @@ void RaftNode::CandidateRun(){
     return;
 }
 
+//todo, change this to timer event...
 void RaftNode::NodeRun(){
     while(true){
         if(role == LEADER){
             LeaderRun();
         } else if(role == FOLLOWER){
             FollowerRun();
-        } else{
-            continue;
+        } else if(role == CANDIDATE){
+            CandidateRun();
         }
     }
 }
