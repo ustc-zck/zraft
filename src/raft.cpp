@@ -2,7 +2,7 @@
 
 using std::placeholders::_1;
 
-RaftNode::RaftNode(std::string confPath){
+RaftNode::RaftNode(std::string confPath, std::string dataDir){
     //read conf...
     raftConf = new RaftConf(confPath);
     nodeId = raftConf->addr;
@@ -15,7 +15,7 @@ RaftNode::RaftNode(std::string confPath){
     options.IncreaseParallelism();  // Optimize RocksDB...
     options.OptimizeLevelStyleCompaction();
     options.create_if_missing = true;  // create the DB if it's not already present...
-    s = rocksdb::DB::Open(options, "rocksdb02/", &db);
+    s = rocksdb::DB::Open(options, dataDir, &db);
     if(!s.ok()){
         abort();
     }
@@ -184,7 +184,6 @@ bool RaftNode::UpdateConf(std::unordered_map<std::string, std::string> conf){
 }
 
 void RaftNode::FlushLog(){
-
     if(logIndex.size() == 0){
         return;
     }
@@ -684,34 +683,36 @@ void RaftNode::CandidateRun(){
 }
 
 //todo, change this to timer event...
-void RaftNode::NodeRun(){
-    while(true){
-        if(role == LEADER){
-            LeaderRun();
-        } else if(role == FOLLOWER){
-            FollowerRun();
-        } else if(role == CANDIDATE){
-            CandidateRun();
-        }
-    }
-}
+// void RaftNode::NodeRun(){
+//     while(true){
+//         if(role == LEADER){
+//             LeaderRun();
+//         } else if(role == FOLLOWER){
+//             FollowerRun();
+//         } else if(role == CANDIDATE){
+//             CandidateRun();
+//         }
+//     }
+// }
 
 void RaftNode::Handle(){
     server->Handler = std::bind(&RaftNode::ServerHandler, this, _1);
-    //server->TimeHandler = std::bind(&RaftNode::CandidateRun, this);
-    //server->AddTimeEvent(raftConf->electionTimeOut);
+    server->TimerEvent(std::bind(&RaftNode::LeaderRun, this), broadcastTimeOut);
+    server->TimerEvent(std::bind(&RaftNode::FollowerRun, this), electionTimeOut);
+    server->TimerEvent(std::bind(RaftNode::CandidateRun, this), electionTimeOut);
     server->Run();
 }
 
 void RaftNode::Run(){
     std::thread handle(&RaftNode::Handle, this);
     std::thread apply(&RaftNode::Apply, this);
-    std::thread run(&RaftNode::NodeRun, this);
-    std::thread flushlog(&RaftNode::FlushLog, this);
+    //std::thread run(&RaftNode::NodeRun, this);
+    //TODO, add flush log...
+    //std::thread flushlog(&RaftNode::FlushLog, this);
     std::thread debug(&RaftNode::Debug, this);
     handle.join();
     apply.join();
-    run.join();
-    flushlog.join();
+    //run.join();
+    //flushlog.join();
     debug.join();
 }

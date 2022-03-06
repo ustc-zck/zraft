@@ -7,6 +7,7 @@
 #include <sys/timerfd.h>
 #include "thread.h"
 #include <iostream>
+#include <unordered_map>
 
 #pragma once
 
@@ -23,9 +24,9 @@ class Server{
 
         //IO Timer func...
         // int (*TimeHandler)();
-        std::function<void(void)> TimeHandler;
+        // std::function<void(void)> TimeHandler;
         //Add time event...
-        int AddTimeEvent(int millisceonds);
+        // int AddTimeEvent(int millisceonds);
         //wrapper...
         void Wrapper(std::vector<int> fds){
             for(auto fd : fds){
@@ -48,6 +49,7 @@ class Server{
                 }
             }
         }    
+        int TimerEvent(std::function<void(void)> timerEvent, int millisceonds);
         //run server...
         int Run();
     private:
@@ -57,8 +59,10 @@ class Server{
         struct epoll_event* event;
         struct epoll_event *events;
         Socket* listen_socket;
-        Socket* timer_socket;
+       
         //thread pool...
         //std::vector<std::thread> threads;
         std::vector<Thread*> threads;
+        //map of fd vs timer_handler...
+        std::unordered_map<int, std::function<void(void)>> timer_fds;
 };

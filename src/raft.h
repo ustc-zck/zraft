@@ -21,7 +21,7 @@
 
 class RaftNode{
     public:
-        RaftNode(std::string confPath = "conf/raft.conf");
+        RaftNode(std::string confPath = "conf/raft.conf", std::string dataDir = "rockdsb/");
         ~RaftNode();
         //replicate log entries to followers, also used as heartbeart...
         //term: leader term, leaderId: leader id, prevLogIndex: the lastest index of log entry for follower, which is value of nextIndex, prevLogTerm: the term of prevLogEntry, entries: log_entries to followersm empty for heartbeat, leaderCommit: leader's commitIndex
@@ -70,8 +70,8 @@ class RaftNode{
         }
 
         void Debug(){
-            // while(true){
-                // if(GetCurrentMillSeconds() % 5000 == 0){
+            while(true){
+                if(GetCurrentMillSeconds() % 2000 == 0){
                     std::cout << "role is " << role << std::endl;
                     std::cout << "leader is " << leaderId << std::endl;
                     std::cout << "voted for " << voteFor << std::endl;
@@ -89,8 +89,8 @@ class RaftNode{
                     std::cout << "commit index is " << commitIndex << std::endl;
                     std::cout << "last applied index is " << lastApplied << std::endl;
                     std::cout << "\n" << std::endl;
-                // }
-            // }   
+                }
+            }   
         }
 
     private:

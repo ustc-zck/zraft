@@ -32,12 +32,6 @@ Server::Server(int port){
     }
     events = (struct epoll_event*) calloc(MAXEVENTS, sizeof(struct epoll_event*));
 
-    int tfd;
-    tfd = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK);
-    if(tfd < 0){
-        abort();
-    }
-    timer_socket = new Socket(tfd);
     // std::vector<std::thread> ths(MAXTHREADS);
     // threads = std::move(ths);
     for(int i = 0; i < MAXTHREADS; i++){
@@ -47,7 +41,41 @@ Server::Server(int port){
     Port = port;
 }
 
-int Server::AddTimeEvent(int milliseconds){
+// int Server::AddTimeEvent(int milliseconds){
+//     int tfd;
+//     Socket* timer_socket;
+//     tfd = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK);
+//     if(tfd < 0){
+//         return -1;
+//     }
+//     timer_socket = new Socket(tfd);
+//     struct itimerspec ts;
+//     ts.it_value.tv_sec =  milliseconds / 1000;
+//     ts.it_value.tv_nsec = (milliseconds % 1000) * 1000000;
+//     ts.it_interval.tv_sec = milliseconds / 1000;
+//     ts.it_interval.tv_nsec = (milliseconds % 1000) * 1000000;
+    
+//     if(timerfd_settime(timer_socket->Fd(), 0, &ts, NULL) < 0){
+//         return -1;
+//     }
+//     timer_socket->SetSocketNonBlocking();
+
+//     event->data.fd = timer_socket->Fd();
+//     events->events = EPOLLIN | EPOLLET;
+//     if (epoll_ctl(efd, EPOLL_CTL_ADD, timer_socket->Fd(), event) < 0){
+//         return -1;
+//     }
+//     return 0;
+// }
+
+int Server::TimerEvent(std::function<void(void)> timerEvent, int milliseconds){
+    int tfd;
+    tfd = timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK);
+    if(tfd < 0){
+        return -1;
+    }
+    Socket* timer_socket;
+    timer_socket = new Socket(tfd);
     struct itimerspec ts;
     ts.it_value.tv_sec =  milliseconds / 1000;
     ts.it_value.tv_nsec = (milliseconds % 1000) * 1000000;
@@ -64,6 +92,7 @@ int Server::AddTimeEvent(int milliseconds){
     if (epoll_ctl(efd, EPOLL_CTL_ADD, timer_socket->Fd(), event) < 0){
         return -1;
     }
+    timer_fds[tfd] = timerEvent;
     return 0;
 }
 
@@ -97,14 +126,25 @@ int Server::Run(){
                             std::cout << "failed to add fd into epoll event" << std::endl;
                         }
                     }
-                } else if(events[i].data.fd == timer_socket->Fd()){
-                    //timer event...
+                }
+                // } else if(events[i].data.fd == timer_socket->Fd()){
+                    // //timer event...
+                    // int ret = timer_socket->Recev();
+                    // if (ret != sizeof(uint64_t)){
+                    //     std::cout << "timer fd error" << std::endl;
+                    //     close(timer_socket->Fd());
+                    // }
+                    // TimeHandler();
+                // }
+                else if(timer_fds.find(events[i].data.fd) != timer_fds.end()){
+                    Socket* timer_socket = new Socket(events[i].data.fd);
                     int ret = timer_socket->Recev();
                     if (ret != sizeof(uint64_t)){
                         std::cout << "timer fd error" << std::endl;
                         close(timer_socket->Fd());
                     }
-                    TimeHandler();
+                    auto handler = timer_fds[events[i].data.fd];
+                    handler();
                 }
                 else {
                     //Wrapper(events[i].data.fd);
@@ -138,7 +178,7 @@ int Server::Run(){
 
 Server::~Server(){
     delete listen_socket;
-    delete timer_socket;
+    // delete timer_socket;
     delete []events;
     close(efd);
 }
