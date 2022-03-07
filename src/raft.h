@@ -70,27 +70,23 @@ class RaftNode{
         }
 
         void Debug(){
-            while(true){
-                if(GetCurrentMillSeconds() % 2000 == 0){
-                    std::cout << "role is " << role << std::endl;
-                    std::cout << "leader is " << leaderId << std::endl;
-                    std::cout << "voted for " << voteFor << std::endl;
-                    std::cout << "current term is " << currentTerm << std::endl;
-                    std::cout << "last log index is " << this->LastLogIndex() << std::endl;
-                    std::cout << "last log term is " << logTerm[this->LastLogIndex()] << std::endl;
-                    std::cout << "last log command is " << logCommand[this->LastLogIndex()] << std::endl;
-                    if(role == LEADER){
-                        for(auto peer : peers){
-                            std::cout << "prev log index of " << peer << " is " << nextIndex[peer] - 1 << "\t";
-                            std::cout << "prev log term of " << peer  << " is " << logTerm[nextIndex[peer] - 1] << std::endl;
-                            std::cout << "next log index of  " << peer << " is " << nextIndex[peer] << std::endl; 
-                        }
-                    }
-                    std::cout << "commit index is " << commitIndex << std::endl;
-                    std::cout << "last applied index is " << lastApplied << std::endl;
-                    std::cout << "\n" << std::endl;
+            std::cout << "role is " << role << std::endl;
+            std::cout << "leader is " << leaderId << std::endl;
+            std::cout << "voted for " << voteFor << std::endl;
+            std::cout << "current term is " << currentTerm << std::endl;
+            std::cout << "last log index is " << this->LastLogIndex() << std::endl;
+            std::cout << "last log term is " << logTerm[this->LastLogIndex()] << std::endl;
+            std::cout << "last log command is " << logCommand[this->LastLogIndex()] << std::endl;
+            if(role == LEADER){
+                for(auto peer : peers){
+                    std::cout << "prev log index of " << peer << " is " << nextIndex[peer] - 1 << "\t";
+                    std::cout << "prev log term of " << peer  << " is " << logTerm[nextIndex[peer] - 1] << std::endl;
+                    std::cout << "next log index of  " << peer << " is " << nextIndex[peer] << std::endl; 
                 }
-            }   
+            }
+            std::cout << "commit index is " << commitIndex << std::endl;
+            std::cout << "last applied index is " << lastApplied << std::endl;
+            std::cout << "\n" << std::endl;
         }
 
     private:

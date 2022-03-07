@@ -244,7 +244,6 @@ void RaftNode::Apply(){
 
 //leader --> follower, now only support replicate one entry one time...
 std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::string leaderId_, uint64_t prevLogIndex, uint64_t prevLogTerm, std::vector<std::tuple<uint64_t, uint64_t, std::string>> entries, uint64_t leaderCommit){
-    
     if(role == CANDIDATE){
         role = FOLLOWER;
         leaderId = leaderId_;
@@ -594,6 +593,9 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
 
 //run on leader node...
 void RaftNode::LeaderRun(){
+    if(role != LEADER){
+        return;
+    }
     for(auto peer : peers){
         ////std::cout << "last log index is " << this->LastLogIndex() << std::endl;
         ////std::cout << "next index is " << nextIndex[peer] << std::endl;
@@ -628,7 +630,9 @@ void RaftNode::LeaderRun(){
 }
 
 void RaftNode::FollowerRun(){
-    //TODO, change this to timer event...
+    if(role != FOLLOWER){
+        return;
+    }
     if(GetCurrentMillSeconds() - lastReceiveLogEntriesTime > electionTimeOut){
         role = CANDIDATE;
     }
@@ -699,7 +703,8 @@ void RaftNode::Handle(){
     server->Handler = std::bind(&RaftNode::ServerHandler, this, _1);
     server->TimerEvent(std::bind(&RaftNode::LeaderRun, this), broadcastTimeOut);
     server->TimerEvent(std::bind(&RaftNode::FollowerRun, this), electionTimeOut);
-    server->TimerEvent(std::bind(RaftNode::CandidateRun, this), electionTimeOut);
+    server->TimerEvent(std::bind(&RaftNode::CandidateRun, this), electionTimeOut);
+    server->TimerEvent(std::bind(&RaftNode::Debug, this), electionTimeOut);
     server->Run();
 }
 
@@ -709,10 +714,10 @@ void RaftNode::Run(){
     //std::thread run(&RaftNode::NodeRun, this);
     //TODO, add flush log...
     //std::thread flushlog(&RaftNode::FlushLog, this);
-    std::thread debug(&RaftNode::Debug, this);
+    //std::thread debug(&RaftNode::Debug, this);
     handle.join();
     apply.join();
     //run.join();
     //flushlog.join();
-    debug.join();
+    //debug.join();
 }
