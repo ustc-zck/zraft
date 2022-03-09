@@ -55,6 +55,7 @@ void RaftNode::ReinitilAfterElection(){
         matchIndex[peer] = 0;
     }
     voteFor = "NONE";
+    votes = 0;
 }
 
 RaftNode::~RaftNode(){
@@ -652,7 +653,6 @@ void RaftNode::CandidateRun(){
     for(auto peer : peers){
         ////std::cout << "request vote from peer " << peer << std::endl;
         ////std::cout << "current term is " << currentTerm << std::endl;
-
         auto ret = CandidataRequestVote(peer);
         ////std::cout << "result of requst vote is " << ret.first << "\t" << ret.second << std::endl;
         if(ret.first > currentTerm){
@@ -660,6 +660,7 @@ void RaftNode::CandidateRun(){
             currentTerm = ret.first;
             //each vote in each term...
             voteFor = "NONE";
+            votes = 0;
             role = FOLLOWER;
             break;
         } else if(ret.second == true){
