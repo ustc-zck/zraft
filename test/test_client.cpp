@@ -5,9 +5,9 @@
 
 int main(){
     RaftClient* cli = new RaftClient("127.0.0.1:9000");
-    if(cli->Put("hell1o1", "world1")){
+    if(cli->Put("hell1o", "world")){
         std::cout << "sucessfully put kv into raft" << std::endl;
     }
-    std::cout << "val is: " << cli->Get("hello1") << std::endl;
+    std::cout << "val is: " << cli->Get("hell1o") << std::endl;
     return 0;
 }

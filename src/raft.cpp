@@ -1,6 +1,7 @@
 #include "raft.h"
 
 using std::placeholders::_1;
+using std::this_thread::sleep_for;
 
 RaftNode::RaftNode(std::string confPath, std::string dataDir){
     //read conf...
@@ -55,6 +56,7 @@ void RaftNode::ReinitilAfterElection(){
         matchIndex[peer] = 0;
     }
     voteFor = "NONE";
+    leaderId = "NONE";
     votes = 0;
 }
 
@@ -252,10 +254,7 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
 
     lastReceiveLogEntriesTime = GetCurrentMillSeconds();
     ////std::cout << "time is " << lastReceiveLogEntriesTime << std::endl;
-    if(leaderId == "NONE"){
-        leaderId = leaderId_;   
-    }
-
+  
     ////std::cout << "leader term is " << leaderTerm << std::endl;
     ////std::cout << "current term is " << currentTerm << std::endl;
     if(leaderTerm < currentTerm){
@@ -263,9 +262,16 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
     } else if (leaderTerm > currentTerm) {
         currentTerm = leaderTerm;
         voteFor = "NONE";
+        leaderId = "NONE";
+        votes = 0;
+
     } else{
 
     }
+    if(leaderId == "NONE"){
+        leaderId = leaderId_;   
+    }
+
     //default unordered map contains 0 or not???
     ////std::cout << "find pre log index is " << (logTerm.find(prevLogIndex) == logTerm.end()) << std::endl;
     if(logTerm.find(prevLogIndex) == logTerm.end()){
@@ -319,6 +325,13 @@ std::pair<uint64_t, bool> RaftNode::AppendEntries(uint64_t leaderTerm, std::stri
 std::pair<uint64_t, bool> RaftNode::RequestVote(uint64_t candidateTerm, std::string candidateId, uint64_t candidateLastLogIndex, uint64_t candidateLastLogTerm){
     if(candidateTerm <  currentTerm){
         return std::make_pair(currentTerm, false);
+    }
+    if(candidateTerm > currentTerm){
+        currentTerm = candidateTerm;
+        role = FOLLOWER;
+        votes = 0;
+        voteFor = "NONE";
+        leaderId = "NONE";
     }
     if((voteFor == "NONE" || voteFor == candidateId) && (candidateLastLogIndex >= this->LastLogIndex() && candidateLastLogTerm >= logTerm[this->LastLogIndex()])){
         voteFor = candidateId;
@@ -464,7 +477,7 @@ std::string RaftNode::ServerHandler(char* buf){
             // }
             return resp;
         } else if(operation == "REQUESTVOTE"){
-            if(items.size() == 5){
+            if(items.size() >= 5){
                 uint64_t candidateTerm = std::stoull(items[1]);
                 std::string candidateId = items[2];
                 //std::cout << "candidate id " << candidateId << " request vote" << std::endl;
@@ -485,7 +498,7 @@ std::string RaftNode::ServerHandler(char* buf){
                     resp += "\t";
                 }
                 std::cout << "request vote resp is " << resp << std::endl; 
-                this->Debug();
+                //this->Debug();
                 return resp;
             }
         }else{
@@ -527,8 +540,8 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     }
     requestMsg += std::to_string(commitIndex);
     requestMsg += "\t";
-
-    std::cout << "leader " << nodeId << " send log entries " << requestMsg << std::endl; 
+    
+    std::cout << "leader " << nodeId << " send log entries to peer " << peer << "\t" << requestMsg << std::endl; 
 
     auto s = new Socket();
     if(s->Connect(peer) < 0){
@@ -539,7 +552,7 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     }
     if(s->Recev() > 0){
         auto resp = s->ReadBuf();
-        std::cout << "resp is " << resp << std::endl;
+        std::cout << "resp from peer " << peer << " is " << resp << std::endl;
         std::vector<std::string> items = SplitStr(resp, '\t');
         if(items[1] == "TRUE"){
             return std::make_pair(std::stoull(items[0]), true);
@@ -550,7 +563,7 @@ std::pair<uint64_t, bool> RaftNode::LeaderSendLogEntries(std::string peer, int e
     return std::make_pair(0, false);
 }
 
-std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
+std::pair<uint64_t, bool> RaftNode::CandidateRequestVote(std::string peer){
     if(role != CANDIDATE){
         return std::make_pair(0, false);
     }
@@ -576,10 +589,10 @@ std::pair<uint64_t, bool> RaftNode::CandidataRequestVote(std::string peer){
     }
     ////std::cout << "request vote from " << peer << std::endl;
     ////std::cout << "current term is " << currentTerm << std::endl;
-
+    std::cout << "request vote send message is " << requestMsg << std::endl;
     if(s->Recev() > 0){
         auto resp = std::string(s->ReadBuf());
-        std::cout << "resp is " << resp << std::endl;
+        std::cout << "request vote receive message is " << resp << std::endl;
         std::vector<std::string> items = SplitStr(resp, '\t');
         if(items.size() >= 2){
             if(items[1] == "TRUE"){
@@ -608,6 +621,8 @@ void RaftNode::LeaderRun(){
                 currentTerm = ret.first;
                 voteFor = "NONE";
                 role = FOLLOWER;
+                leaderId = "NONE";
+                votes = 0;
             } else if(ret.second == false){
                 nextIndex[peer]--;
                 if(nextIndex[peer] < 1){
@@ -644,35 +659,43 @@ void RaftNode::CandidateRun(){
         return;
     }
     currentTerm++;
-    voteFor = nodeId;
-    votes = 1;
+    voteFor = "NONE";
+    votes = 0;
+    leaderId = "NONE";
     startElectionTime = GetCurrentMillSeconds();
     auto randomSleepTime = uint64_t(GenerateRandomNumber() * electionTimeOut);
+    sleep_for(std::chrono::milliseconds(randomSleepTime));
+    if(voteFor == "NONE"){
+        voteFor = nodeId;
+        votes = 1;
+    }
     ////std::cout << "sleep random milliseconds " << randomSleepTime << std::endl;
-    usleep(randomSleepTime);
+    
     for(auto peer : peers){
-        ////std::cout << "request vote from peer " << peer << std::endl;
-        ////std::cout << "current term is " << currentTerm << std::endl;
-        auto ret = CandidataRequestVote(peer);
-        ////std::cout << "result of requst vote is " << ret.first << "\t" << ret.second << std::endl;
-        if(ret.first > currentTerm){
-            //can not be chosen as leader...
-            currentTerm = ret.first;
-            //each vote in each term...
-            voteFor = "NONE";
-            votes = 0;
-            role = FOLLOWER;
-            break;
-        } else if(ret.second == true){
-            votes++;
-            //std::cout << "get voted from " << peer << std::endl;
-        } else{
-            continue;
+        if(role == CANDIDATE){
+            ////std::cout << "request vote from peer " << peer << std::endl;
+            ////std::cout << "current term is " << currentTerm << std::endl;
+            auto ret = this->CandidateRequestVote(peer);
+            ////std::cout << "result of requst vote is " << ret.first << "\t" << ret.second << std::endl;
+            if(ret.first > currentTerm){
+                //can not be chosen as leader...
+                currentTerm = ret.first;
+                //each vote in each term...
+                voteFor = "NONE";
+                votes = 0;
+                role = FOLLOWER;
+                break;
+            } else if(ret.second == true){
+                votes++;
+                //std::cout << "get voted from " << peer << std::endl;
+            } else{
+                continue;
+            }
         }
     }
     if(role == CANDIDATE && votes > (1 + peers.size()) / 2.0){
         role = LEADER;
-        ////std::cout << nodeId << " is chosen as leader." << std::endl;
+        std::cout << nodeId << " is chosen as leader." << std::endl;
         this->ReinitilAfterElection();
         return;
     }
@@ -687,38 +710,53 @@ void RaftNode::CandidateRun(){
     return;
 }
 
-//todo, change this to timer event...
-// void RaftNode::NodeRun(){
-//     while(true){
-//         if(role == LEADER){
-//             LeaderRun();
-//         } else if(role == FOLLOWER){
-//             FollowerRun();
-//         } else if(role == CANDIDATE){
-//             CandidateRun();
-//         }
-//     }
-// }
+// todo, change this to timer event...
+void RaftNode::NodeRun(){
+    while(true){
+        if(role == LEADER){
+            uint64_t start = GetCurrentMillSeconds();
+            LeaderRun();
+            uint64_t end = GetCurrentMillSeconds();
+            if(end - start < broadcastTimeOut){
+                sleep_for(std::chrono::milliseconds(broadcastTimeOut - end + start));
+            }
+        } else if(role == FOLLOWER){
+            uint64_t start = GetCurrentMillSeconds();
+            FollowerRun();
+            uint64_t end = GetCurrentMillSeconds();
+            if(end - start < electionTimeOut){
+                sleep_for(std::chrono::milliseconds(electionTimeOut - end + start));
+            }
+        } else if(role == CANDIDATE){
+            uint64_t start = GetCurrentMillSeconds();
+            CandidateRun();
+            uint64_t end = GetCurrentMillSeconds();
+            if(end - start < electionTimeOut){
+                sleep_for(std::chrono::milliseconds(electionTimeOut - end + start));
+            }
+        }
+    }
+}
 
 void RaftNode::Handle(){
     server->Handler = std::bind(&RaftNode::ServerHandler, this, _1);
-    server->TimerEvent(std::bind(&RaftNode::LeaderRun, this), broadcastTimeOut);
-    server->TimerEvent(std::bind(&RaftNode::FollowerRun, this), electionTimeOut);
-    server->TimerEvent(std::bind(&RaftNode::CandidateRun, this), electionTimeOut);
-    server->TimerEvent(std::bind(&RaftNode::Debug, this), electionTimeOut);
+    //server->TimerEvent(std::bind(&RaftNode::LeaderRun, this), broadcastTimeOut);
+    //server->TimerEvent(std::bind(&RaftNode::FollowerRun, this), electionTimeOut);
+    //server->TimerEvent(std::bind(&RaftNode::CandidateRun, this), electionTimeOut);
+    //server->TimerEvent(std::bind(&RaftNode::Debug, this), electionTimeOut);
     server->Run();
 }
 
 void RaftNode::Run(){
     std::thread handle(&RaftNode::Handle, this);
     std::thread apply(&RaftNode::Apply, this);
-    //std::thread run(&RaftNode::NodeRun, this);
+    std::thread run(&RaftNode::NodeRun, this);
     //TODO, add flush log...
     //std::thread flushlog(&RaftNode::FlushLog, this);
-    //std::thread debug(&RaftNode::Debug, this);
+    std::thread debug(&RaftNode::Debug, this);
     handle.join();
     apply.join();
     //run.join();
     //flushlog.join();
-    //debug.join();
+    debug.join();
 }
