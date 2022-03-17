@@ -1,0 +1,780 @@
+role is 1
+leader is NONE
+voted for NONE
+current term is 0
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+Blocking and wait for epoll event on port: 9001
+receive message *	REQUESTVOTE	2	127.0.0.1:9000	0	0	
+request vote resp is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+leader commit is 0
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		0	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 0
+prev log term is 0
+commad entry is 1 2 PUT	hell1o	world	
+leader commit is 0
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+leader commit is 1
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	1	2	2	2	PUT	hell1o	world		1	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 1
+prev log term is 2
+commad entry is 2 2 PUT	hell1o	world	
+leader commit is 1
+apply command is PUT	hell1o	world	
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 1
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 1
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 1
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 1
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 1
+votes is 0
+
+
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+receive message *	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+ledar term is 2
+leader id is 127.0.0.1:9000
+prev log index is 2
+prev log term is 2
+leader commit is 2
+resp of append entries is 2	TRUE	
+role is 1
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 1
+votes is 0
+
+
+role is 2
+leader is 127.0.0.1:9000
+voted for 127.0.0.1:9000
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 1
+votes is 0
+
+

@@ -84,6 +84,7 @@ class RaftNode{
                         std::cout << "prev log index of " << peer << " is " << nextIndex[peer] - 1 << "\t";
                         std::cout << "prev log term of " << peer  << " is " << logTerm[nextIndex[peer] - 1] << std::endl;
                         std::cout << "next log index of  " << peer << " is " << nextIndex[peer] << std::endl; 
+                        std::cout << "match index of " << peer << " is " << matchIndex[peer] << std::endl;
                     }
                 }
                 std::cout << "commit index is " << commitIndex << std::endl;

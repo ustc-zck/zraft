@@ -1,0 +1,574 @@
+Blocking and wait for epoll event on port: 9000
+role is 1
+leader is NONE
+voted for NONE
+current term is 0
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+role is 2
+leader is NONE
+voted for NONE
+current term is 0
+last log index is 0
+last log term is 0
+last log command is 
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+request vote send message is *	REQUESTVOTE	2	127.0.0.1:9000	0	0	
+request vote receive message is 2	TRUE	
+127.0.0.1:9000 is chosen as leader.
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+prev log index of 127.0.0.1:9001 is 0	prev log term of 127.0.0.1:9001 is 0
+next log index of  127.0.0.1:9001 is 1
+match index of 127.0.0.1:9001 is 0
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+prev log index of 127.0.0.1:9001 is 0	prev log term of 127.0.0.1:9001 is 0
+next log index of  127.0.0.1:9001 is 1
+match index of 127.0.0.1:9001 is 0
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+prev log index of 127.0.0.1:9001 is 0	prev log term of 127.0.0.1:9001 is 0
+next log index of  127.0.0.1:9001 is 1
+match index of 127.0.0.1:9001 is 0
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+prev log index of 127.0.0.1:9001 is 0	prev log term of 127.0.0.1:9001 is 0
+next log index of  127.0.0.1:9001 is 1
+match index of 127.0.0.1:9001 is 0
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+prev log index of 127.0.0.1:9001 is 0	prev log term of 127.0.0.1:9001 is 0
+next log index of  127.0.0.1:9001 is 1
+match index of 127.0.0.1:9001 is 0
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+prev log index of 127.0.0.1:9001 is 0	prev log term of 127.0.0.1:9001 is 0
+next log index of  127.0.0.1:9001 is 1
+match index of 127.0.0.1:9001 is 0
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 0
+last log term is 0
+last log command is 
+prev log index of 127.0.0.1:9001 is 0	prev log term of 127.0.0.1:9001 is 0
+next log index of  127.0.0.1:9001 is 1
+match index of 127.0.0.1:9001 is 0
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 0
+last applied index is 0
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	0	
+receive message *	PUT	hell1o	world	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		0	
+receive message *	GET	hell1o	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+apply command is PUT	hell1o	world	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 1
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 1	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 2
+match index of 127.0.0.1:9001 is 1
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 1
+last applied index is 1
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 1
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 1	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 2
+match index of 127.0.0.1:9001 is 1
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 1
+last applied index is 1
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 1
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 1	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 2
+match index of 127.0.0.1:9001 is 1
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 1
+last applied index is 1
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 1
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 1	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 2
+match index of 127.0.0.1:9001 is 1
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 1
+last applied index is 1
+votes is 0
+
+
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		1	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	1	
+receive message *	PUT	hell1o	world	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		1	
+receive message *	GET	hell1o	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	1	2	2	2	PUT	hell1o	world		1	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+apply command is PUT	hell1o	world	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 2
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 2	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 3
+match index of 127.0.0.1:9001 is 2
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 2
+last applied index is 2
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 2
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 2	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 3
+match index of 127.0.0.1:9001 is 2
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 2
+last applied index is 2
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 2
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 2	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 3
+match index of 127.0.0.1:9001 is 2
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 2
+last applied index is 2
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 2
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 2	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 3
+match index of 127.0.0.1:9001 is 2
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 2
+last applied index is 2
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 2
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 2	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 3
+match index of 127.0.0.1:9001 is 2
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 2
+last applied index is 2
+votes is 0
+
+
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9001	*	APPENDENTRIES	2	127.0.0.1:9000	2	2	2	
+resp from peer 127.0.0.1:9001 is 2	TRUE	
+leader 127.0.0.1:9000 send log entries to peer 127.0.0.1:9002	*	APPENDENTRIES	2	127.0.0.1:9000	0	0	1	2	PUT	hell1o	world		2	2	PUT	hell1o	world		2	
+role is 0
+leader is NONE
+voted for NONE
+current term is 2
+last log index is 2
+last log term is 2
+last log command is PUT	hell1o	world	
+prev log index of 127.0.0.1:9001 is 2	prev log term of 127.0.0.1:9001 is 2
+next log index of  127.0.0.1:9001 is 3
+match index of 127.0.0.1:9001 is 2
+prev log index of 127.0.0.1:9002 is 0	prev log term of 127.0.0.1:9002 is 0
+next log index of  127.0.0.1:9002 is 1
+match index of 127.0.0.1:9002 is 0
+commit index is 2
+last applied index is 2
+votes is 0
+
+

@@ -4,7 +4,7 @@
 //g++ -o test_client test_client.cpp ../src/*cpp ../lib/lei/src/*cpp -lrocksdb -ldl -lpthread -lboost_filesystem -lboost_system
 
 int main(){
-    RaftClient* cli = new RaftClient("127.0.0.1:9000");
+    RaftClient* cli = new RaftClient("127.0.0.1:9001");
     if(cli->Put("hell1o", "world")){
         std::cout << "sucessfully put kv into raft" << std::endl;
     }

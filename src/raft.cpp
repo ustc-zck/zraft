@@ -217,8 +217,10 @@ void RaftNode::FlushLog(){
 void RaftNode::Apply(){
     while(true){
         if(commitIndex > lastApplied){
-            auto index = logIndex[lastApplied + 1];
+            //fix bug, from `lastApplied + 1` to `lastApplied`
+            auto index = logIndex[lastApplied];
             auto command = logCommand[index];
+            std::cout << "apply command is " << command << std::endl;
             //parse command...
             auto items = SplitStr(command, '\t');
             if(items[0] == "PUT"){
@@ -239,6 +241,7 @@ void RaftNode::Apply(){
                 this->UpdateConfDO(args);
             } else{
                 //TODO...
+                continue;
             }
             lastApplied++;
         }
@@ -345,7 +348,8 @@ void RaftNode::UpdateCommitIndex(){
     for(auto peer : peers){
         auto N = matchIndex[peer];
         if(N > commitIndex){
-            int count = 0;
+            //fix this bug, set count as 1
+            int count = 1;
             for(auto peer : peers){
                 if(matchIndex[peer] >= N){
                     count++;
