@@ -7,8 +7,12 @@ implement raft protocol
 
 #Phase II ##DONE
 
-use rocksdb as storage engine.
+use rocksdb as storage engine
 
 #Phase III ##TODO
 
 implement snapshot, chunk balance and so on...
+
+#Phase IV
+
+implement membership change
