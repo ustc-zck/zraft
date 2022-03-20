@@ -11,8 +11,15 @@ use rocksdb as storage engine
 
 #Phase III ##TODO
 
-implement snapshot, chunk balance and so on...
+For snapshot, generate snapshot of data by `checkpoint` of rocksdb and store the index, then send `checkpoint` to follower. After successfully send data, set the nextIndex of leader and index of follower.
+
+To implement chunk balance, TODO...
+
 
 #Phase IV
 
-implement membership change
+implement membership change. Add `update conf` command  in zraft, so the membership problem is similarly solved by raft protocol. 
+
+#Phase V
+
+To implement chunk balance, TODO...
