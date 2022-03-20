@@ -23,3 +23,5 @@ implement membership change. Add `update conf` command  in zraft, so the members
 #Phase V
 
 To implement chunk balance, TODO...
+
+Note that, to complie and run zraft, you should first install dynamic rocksdb lib, which can be found in https://github.com/facebook/rocksdb
